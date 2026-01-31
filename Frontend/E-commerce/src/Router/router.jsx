@@ -7,19 +7,21 @@ import Register from "../Pages/Authentication/Register/Register";
 import Coverage from "../Pages/Coverage/Coverage";
 import SendParcel from "../Pages/SendParcel/SendParcel";
 import PrivateRoute from "../routes/PrivateRoute.jsx";
+import DashboardLayout from "../Layouts/DashboardLayout.jsx";
+import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels.jsx";
+import Payment from "../Pages/Dashboard/Payment/Payment.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
         element: <RootLayout></RootLayout>,
-        children:[
+        children: [
             {
                 index: true,
                 element: <Home></Home>
             },
             {
                 path: 'sendparcel',
-                // element: <PrivateRoute><SendParcel></SendParcel></PrivateRoute>
-                element: <SendParcel></SendParcel>,
+                element: <PrivateRoute><SendParcel></SendParcel></PrivateRoute>,
                 loader: () => fetch('./districtsData.json').then(res => res.json())
             },
             {
@@ -40,6 +42,22 @@ const router = createBrowserRouter([
             {
                 path: 'register',
                 element: <Register></Register>
+            }
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <PrivateRoute>
+            <DashboardLayout></DashboardLayout>
+        </PrivateRoute>,
+        children: [
+            {
+                path: 'myparcels',
+                element: <MyParcels></MyParcels>
+             }
+             , {
+                path: 'payment/:id',
+                element: <Payment></Payment>
             }
         ]
     }

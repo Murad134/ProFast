@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import authImg from '../assets/Anothr/authImage.png'
-import ProFastLogo from '../Pages/Shared/ProFastLogo/Profastlogo'
+import ProFastLogo from '../Pages/Shared/ProFastLogo/ProfastlogoF'
 function AuthLayout() {
     return (
         <div className="p-12 bg-base-200">

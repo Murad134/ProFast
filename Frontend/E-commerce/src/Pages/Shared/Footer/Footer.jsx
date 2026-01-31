@@ -1,5 +1,5 @@
 import React from 'react'
-import Profastlogo from '../ProFastLogo/Profastlogo'
+import Profastlogo from '../ProFastLogo/ProfastlogoF'
 function Footer() {
     return (
         <footer className="footer footer-horizontal footer-center bg-neutral text-neutral-content p-10">

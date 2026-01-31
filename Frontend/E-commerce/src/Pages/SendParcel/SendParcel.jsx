@@ -2,7 +2,25 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Toaster } from 'react-hot-toast';
 import { useLoaderData } from 'react-router';
+import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+
+const generateTrackingId = () => {
+    const date = new Date();
+
+    const datepart = date
+        .toISOString()
+        .split("T")[0]
+        .replace(/-/g, "");
+
+    const rand = Math.random()
+        .toString(36)
+        .substring(2, 7)
+        .toUpperCase();
+
+    return `PCL-${datepart}-${rand}`;
+}
 
 const ParcelDeliveryForm = () => {
     const [showModal, setShowModal] = useState(false);
@@ -15,6 +33,9 @@ const ParcelDeliveryForm = () => {
         formState: { errors },
         reset
     } = useForm();
+
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
 
     const serviceCenters = useLoaderData();
     // extract unique regions
@@ -37,68 +58,128 @@ const ParcelDeliveryForm = () => {
         reset();
     };
 
-    // const DELIVERY_COST = 200;
     const calculateDeliveryCost = (data) => {
         const { parcelType, parcelWeight, senderServiceCenter, receiverServiceCenter } = data;
 
         const isWithinCity = senderServiceCenter === receiverServiceCenter;
 
+        let breakdown = [];
+        let total = 0;
+
         // Document
         if (parcelType === 'Documents') {
-            return isWithinCity ? 60 : 80;
+            const cost = isWithinCity ? 60 : 80;
+
+            breakdown.push({
+                label: 'Document Delivery Charge',
+                amount: cost,
+            });
+
+            total = cost;
         }
-
         // Non-Document
-        const weight = parseFloat(parcelWeight);
+        else {
+            const weight = parseFloat(parcelWeight);
 
-        if (weight <= 3) {
-            return isWithinCity ? 110 : 150;
-        } else {
-            const extraKg = Math.ceil(weight - 3);
-            const extraCost = extraKg * 40;
+            const baseCost = isWithinCity ? 110 : 150;
+            breakdown.push({
+                label: 'Base Charge (up to 3kg)',
+                amount: baseCost,
+            });
 
-            if (isWithinCity) {
-                return 110 + extraCost;
-            } else {
-                return 150 + extraCost + 40; // outside extra charge
+            total += baseCost;
+
+            if (weight > 3) {
+                const extraKg = Math.ceil(weight - 3);
+                const extraCost = extraKg * 40;
+
+                breakdown.push({
+                    label: `Extra Weight (${extraKg} kg × 40 Tk)`,
+                    amount: extraCost,
+                });
+
+                total += extraCost;
+            }
+
+            if (!isWithinCity) {
+                breakdown.push({
+                    label: 'Outside City Surcharge',
+                    amount: 40,
+                });
+
+                total += 40;
             }
         }
+
+        return { total, breakdown };
     };
     const selectedParcelType = watch('parcelType');
     const onSubmit = (data) => {
-        const DELIVERY_COST = calculateDeliveryCost(data);
+        const { total, breakdown } = calculateDeliveryCost(data);
+
+        const breakdownHTML = breakdown
+            .map(
+                item => `
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px">
+                <span>${item.label}</span>
+                <strong>${item.amount} Tk</strong>
+            </div>
+        `
+            )
+            .join('');
 
         Swal.fire({
             title: 'Confirm Booking',
             html: `
-            <p style="font-size:16px">Delivery Cost: 
-                <strong>${DELIVERY_COST} Tk</strong>
-            </p>
+            <div style="text-align:left; font-size:15px">
+                ${breakdownHTML}
+                <hr />
+                <div style="display:flex; justify-content:space-between; font-size:18px; color:#4f46e5">
+                    <strong>Total Payable</strong>
+                    <strong>${total} Tk</strong>
+                </div>
+            </div>
         `,
             icon: 'info',
             showCancelButton: true,
-            confirmButtonText: 'Confirm',
-            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Proceed to Payment',
+            cancelButtonText: 'Edit Details',
             confirmButtonColor: '#4f46e5',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#6b7280',
         }).then((result) => {
             if (result.isConfirmed) {
                 const finalData = {
                     ...data,
-                    DeliveryCost: DELIVERY_COST,
+                    DeliveryCost: total,
+                    // created_by: user.email(),
+                    payment_status: 'unpaid',
+                    delivery_status: 'not_collected',
+                    creation_date: new Date().toISOString(),
+                    trackingId: generateTrackingId(),
+
                 };
 
-                console.log('Parcel created successfully:', finalData);
+                console.log('Proceeding to payment with data:', finalData);
 
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Parcel created successfully.',
-                    icon: 'success',
-                    confirmButtonColor: '#4f46e5',
-                });
+                // Send data to server
+                axiosSecure.post('/parcels', finalData)
+                    .then(response => {
+                        if (response.data.insertedId) {
+                            Swal.fire({
+                                title: 'Redirecting to Payment',
+                                text: 'Please complete your payment.',
+                                icon: 'success',
+                                confirmButtonColor: '#4f46e5',
+                            });
+                        }
+                        console.log('Server Response:', response.data);
+                    })
+
 
                 reset();
+
             }
+            // else → user goes back to editing automatically
         });
     };
 
@@ -483,6 +564,7 @@ const ParcelDeliveryForm = () => {
                                     </h3>
                                     <div className="space-y-6">
                                         {/* Parcel Details */}
+
                                         <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-100">
                                             <h4 className="font-semibold text-lg text-indigo-900 mb-3">Parcel Details</h4>
                                             <dl className="space-y-1">
@@ -501,6 +583,7 @@ const ParcelDeliveryForm = () => {
                                             </dl>
                                         </div>
                                         {/* Sender Details */}
+
                                         <div className="bg-green-50 rounded-lg p-4 border border-green-100">
                                             <h4 className="font-semibold text-lg text-green-900 mb-3">Sender Details</h4>
                                             <dl className="space-y-1">
@@ -527,6 +610,7 @@ const ParcelDeliveryForm = () => {
                                             </dl>
                                         </div>
                                         {/* Receiver Details */}
+
                                         <div className="bg-purple-50 rounded-lg p-4 border border-purple-100">
                                             <h4 className="font-semibold text-lg text-purple-900 mb-3">Receiver Details</h4>
                                             <dl className="space-y-1">
@@ -555,6 +639,7 @@ const ParcelDeliveryForm = () => {
                                     </div>
                                 </div>
                                 {/* Modal Actions */}
+
                                 <div className="bg-gray-50 px-6 py-4 sm:flex sm:flex-row-reverse sm:px-8">
                                     <button
                                         type="submit"
