@@ -10,7 +10,7 @@ Aos.init();
 
 const queryClient = new QueryClient();
 
-import { RouterProvider } from "react-router/dom";
+import { RouterProvider } from "react-router-dom";
 import AuthProvider from './Contexts/AuthContext/AuthProvider.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>

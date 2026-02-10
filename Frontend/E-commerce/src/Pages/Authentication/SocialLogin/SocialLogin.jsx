@@ -1,17 +1,33 @@
 import React from 'react'
 import useAuth from '../../../hooks/useAuth'
+import useAxios from '../../../hooks/useAxios';
 import { useLocation, useNavigate } from 'react-router-dom';
 function SocialLogin() {
     const { signInWithGoogle } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from || '/';
+    const axiosInstance = useAxios();
 
     const handleGoogleSignIn = () => {
         signInWithGoogle()
-            .then(result => {
+            .then(async result => {
                 console.log(result.user);
+
+                //update userinfo in the database
+
+                const user = result.user;
+                const userInfo = {
+                    email: user.email,
+                    role: 'user',
+                    created_at: new Date().toISOString(),
+                    last_log_in: new Date().toISOString(),
+                }
+                const res = await axiosInstance.post('/users', userInfo)
+                console.log('User updated info', res.data);
+
                 navigate(from, { replace: true });
+
             })
             .catch(error => {
                 console.error(error);
@@ -27,5 +43,4 @@ function SocialLogin() {
         </div>
     )
 }
-
 export default SocialLogin

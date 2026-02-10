@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import ProfastlogoF from '../ProFastLogo/ProfastlogoF';
 function Navbar() {
-
     const { user, logOut } = useAuth();
-
     const handleLogout = () => {
         logOut()
             .then(() => {
@@ -24,6 +22,7 @@ function Navbar() {
             user &&
             <li><NavLink to="/dashboard">Dashboard</NavLink></li>
         }
+        <li><NavLink to="/beARider">Be A Rider</NavLink></li>
         <li><NavLink to="/about">About Us</NavLink></li>
     </>
     return (
