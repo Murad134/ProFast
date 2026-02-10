@@ -69,47 +69,6 @@ async function run() {
     // ✅ Database & Collection (clean naming)
     const db = client.db('parcelsend');
     const parcelsCollection = db.collection('parcels');
-    const paymentsCollection = db.collection('payments');
-    const trackingCollection = db.collection("tracking");
-    const usersCollection = db.collection("users");
-    const ridersCollection = db.collection("riders");
-
-    // -------------------- Middleware for Token Verification (Placeholder) --------------------
-    const verifyFBToken = async (req, res, next) => {
-      const authHeader = req.headers.authorization;
-
-      if (!authHeader) {
-        return res.status(401).send({ message: 'Unauthorized access' });
-      }
-      const token = authHeader.split(' ')[1];
-      if (!token) {
-        return res.status(401).send({ message: 'Unauthorized access' });
-      }
-
-      // verify the  token
-      try {
-        const decodedToken = await admin.auth().verifyIdToken(token);
-        req.user = decodedToken; // Attach decoded token to request object
-        next();
-      }
-      catch (error) {
-        return res.status(401).send({ message: 'Unauthorized access' });
-      }
-
-    }
-
-
-    // Middleware to allow access only if the logged-in user exists and has an admin role
-    const verifyAdmin = async (req, res, next) => {
-      const email = req.user.email;
-      const query = { email }
-      const user = await usersCollection.findOne(query);
-      if (!user || user.role !== 'admin') {
-        return res.status(403).send({ message: 'forbidden access' })
-      }
-      next();
-    }
-
 
     // -------------------- Routes --------------------
 
@@ -509,10 +468,69 @@ async function run() {
       }
     });
 
+
+    // -------------------- Payment APIs --------------------
+    // GET: Fetch payments by user email, sorted by latest
+    app.get('/payments', async (req, res) => {
+      try {
+        const userEmail = req.query.email;
+        const query = userEmail ? { email: userEmail } : {};
+        const options = { sort: { paid_at: -1 } };
+        const payments = await paymentsCollection.find(query, options).toArray();
+        res.send(payments);
+
+      }
+      catch (error) {
+        console.error('Error fetching payments:', error);
+        res.status(500).send({ message: 'Failed to fetch payments' });
+      }
+    });
+
+
+    // POST: Record payment and update parcel status 
+    app.post('/payments', async (req, res) => {
+      try {
+        const { parcelId: id, email, amount, paymentMethod, transactionId } = req.body;
+
+        //step :1 update parcels payment_status
+        const updateResult = await parcelsCollection.updateOne(
+          { _id: new ObjectId(id) },
+          { $set: { payment_status: 'Paid' } }
+        );
+        if (updateResult.modifiedCount === 0) {
+          return res.status(404).send({ error: 'Parcel not found or payment status not updated or already paid' });
+        }
+
+
+        // step:2  Insert payment record
+        const paymentDoc = {
+          parcelId: id, email, amount, paymentMethod, transactionId,
+          paid_at_string: new Date().toISOString(),
+          paid_at: new Date(),
+        };
+        const paymentResult = await paymentsCollection.insertOne(paymentDoc);
+
+        res.status(201).send({
+          message: 'Payment recorded and parcel updated successfully',
+          insertedId: paymentResult.insertedId,
+        });
+
+      }
+
+
+
+
+      catch (error) {
+        res.status(500).send({ error: 'Failed to record payment or update parcel' });
+      }
+    });
+
     // -------------------- Stripe Payment Integration --------------------
 
-    app.post("/create-payment-intent", verifyFBToken, async (req, res) => {
-      const amountInCents = req.body.amountInCents;
+
+
+    app.post("/create-payment-intent", async (req, res) => {
+      const { amount } = req.body;
 
       try {
         const paymentIntent = await stripe.paymentIntents.create({
@@ -526,65 +544,6 @@ async function run() {
         });
       } catch (error) {
         res.status(500).send({ error: error.message });
-      }
-    });
-
-    // -------------------- Tracking APIs --------------------
-    // GET: Fetch tracking info by trackingId
-    // app.get("/tracking/:trackingId", async (req, res) => {
-    //   try {
-    //     const { trackingId } = req.params;
-
-    //     const data = await trackingCollection
-    //       .find({ trackingId })
-    //       .sort({ createdAt: 1 })
-    //       .toArray();
-
-    //     res.send(data);
-    //   } catch (err) {
-    //     res.status(500).send({ message: "Failed to fetch tracking" });
-    //   }
-    // });
-
-    // POST: Add tracking info
-    app.post("/tracking", async (req, res) => {
-      try {
-        const {
-          tracking_Id,
-          parcel_Id,
-          status,
-          message,
-          update_by = ''
-        } = req.body;
-        const doc = {
-          tracking_Id,                     // MUST match frontend
-          parcel_Id: parcel_Id ? new ObjectId(parcel_Id) : null,
-          status,
-          message: message || "",
-          update_by: update_by || "",
-          createdAt: new Date()
-        };
-
-        const result = await trackingCollection.insertOne(doc);
-
-        res.send({
-          success: true,
-          insertedId: result.insertedId
-        });
-      } catch (err) {
-        res.status(500).send({ message: "Failed to add tracking" });
-      }
-    });
-
-    // -------------------- Image Upload API with Cloudinary --------------------
-    app.post("/upload-image", upload.single("image"), async (req, res) => {
-      try {
-        res.send({
-          success: true,
-          imageUrl: req.file.path, // Cloudinary image URL
-        });
-      } catch (error) {
-        res.status(500).send({ message: "Image upload failed" });
       }
     });
 

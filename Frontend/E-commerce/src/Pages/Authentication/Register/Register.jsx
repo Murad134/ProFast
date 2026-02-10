@@ -84,18 +84,6 @@ function Register() {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <fieldset className="fieldset">
 
-                        <label className="label">Name</label>
-                        <input
-                            type="text" {...register("name", { required: true })}
-                            className="input" placeholder="Name" />
-                        {errors.name?.type === 'required' && <p className="text-red-500">Name is required</p>}
-
-                        <label className="label">Photo URL</label>
-                        <input
-                            type='file'
-                            onChange={handleImageUpload}
-                            className="input" placeholder="Photo URL" />
-
                         <label className="label">Email</label>
                         <input
                             type="email" {...register("email", { required: true })}
