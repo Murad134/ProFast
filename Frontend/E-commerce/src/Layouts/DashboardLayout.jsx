@@ -2,6 +2,8 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import ProfastlogoF from '../Pages/Shared/ProFastLogo/ProfastlogoF.jsx';
 import { NavLink } from 'react-router-dom';
+import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaHourglassHalf, FaSearchLocation, FaUserEdit, FaCheckCircle, FaUserShield, FaUserCheck } from 'react-icons/fa';
+import useUserRole from '../hooks/useUserRole.jsx'
 function Dashboard() {
     const { role, isLoading } = useUserRole();
     console.log(role);
@@ -42,8 +44,73 @@ function Dashboard() {
                 <ul className="menu bg-base-200 min-h-full w-80 p-4">
                     {/* Sidebar content here */}
                     <ProfastlogoF></ProfastlogoF>
-                    <li><a>Home</a></li>
-                    <li><NavLink to="/dashboard/myparcels">Dashboard</NavLink></li>
+                    <li>
+                        <NavLink to="/">
+                            <FaHome className="inline mr-2" />
+                            Home
+                        </NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink to="/dashboard/myparcels">
+                            <FaBoxOpen className="inline mr-2" />
+                            My Parcels
+                        </NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink to="/dashboard/paymenthistory">
+                            <FaMoneyCheckAlt className="inline mr-2" />
+                            Payment History
+                        </NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink to="/dashboard/track">
+                            <FaSearchLocation className="inline mr-2" />
+                            Track Parcel
+                        </NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink to="/dashboard/profile">
+                            <FaUserEdit className="inline mr-2" />
+                            Update Profile
+                        </NavLink>
+                    </li>
+                    {
+                        !isLoading && role === 'admin' &&
+                        <>
+                            <li>
+                                <NavLink to="/dashboard/assignrider">
+                                    <FaUserCheck className="inline mr-2" />
+                                    Assign Rider
+                                </NavLink>
+                            </li>
+
+                            <li>
+                                <NavLink to="/dashboard/activeriders">
+                                    <FaCheckCircle className="inline mr-2" />
+                                    Active Riders
+                                </NavLink>
+                            </li>
+
+                            <li>
+                                <NavLink to="/dashboard/pendingriders">
+                                    <FaHourglassHalf className="inline mr-2" />
+                                    Pending Riders
+                                </NavLink>
+                            </li>
+
+                            { /*admin routes */}
+                            <li>
+                                <NavLink to='/dashboard/makeAdmin'>
+                                    <FaUserShield className='inline-block mr-2' />
+                                    Make Admin
+                                </NavLink>
+                            </li>
+                        </>
+                    }
                 </ul>
             </div>
         </div>
