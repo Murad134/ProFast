@@ -6,7 +6,6 @@ import useAxiosSecure from './useAxiosSecure';
 const useUserRole = () => {
     const { user, loading } = useAuth();
     const axiosSecure = useAxiosSecure();
-
     const {
         data = { role: 'user' },
         isLoading,

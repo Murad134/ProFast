@@ -23,6 +23,7 @@ function Register() {
             return;
         }
 
+        
         createUser(data.email, data.password)
             .then(async (result) => {
                 console.log(result.user);

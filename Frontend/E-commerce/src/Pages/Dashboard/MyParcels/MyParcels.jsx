@@ -21,6 +21,8 @@ function MyParcels() {
         }
     });
 
+    
+
     const handleView = (id) => {
         const parcel = parcels.find(p => p._id === id);
         if (!parcel) return;
