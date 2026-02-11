@@ -5,6 +5,7 @@ import { useLoaderData } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { useNavigate } from "react-router-dom";
 
 const generateTrackingId = () => {
     const date = new Date();
@@ -25,6 +26,7 @@ const generateTrackingId = () => {
 const ParcelDeliveryForm = () => {
     const [showModal, setShowModal] = useState(false);
     const [formData,] = useState(null);
+    const navigate = useNavigate();
 
     const {
         register,
@@ -165,12 +167,15 @@ const ParcelDeliveryForm = () => {
                 axiosSecure.post('/parcels', finalData)
                     .then(response => {
                         if (response.data.insertedId) {
+
+                            // TODO: redirect to a payment parcel
                             Swal.fire({
                                 title: 'Redirecting to Payment',
                                 text: 'Please complete your payment.',
                                 icon: 'success',
                                 confirmButtonColor: '#4f46e5',
                             });
+                            navigate('/dashboard/myparcels')
                         }
                         console.log('Server Response:', response.data);
                     })

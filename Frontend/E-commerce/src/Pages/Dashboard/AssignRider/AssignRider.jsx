@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { useQuery} from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { Dialog } from "@headlessui/react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AssignRider = () => {
     const axiosSecure = useAxiosSecure();
+    const queryClient = useQueryClient();
 
     const [selectedParcel, setSelectedParcel] = useState(null);
     const [riders, setRiders] = useState([]);
@@ -13,7 +16,7 @@ const AssignRider = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     /* ================= FETCH PARCELS ================= */
-    const { data: parcels = [], isLoading, refetch } = useQuery({
+    const { data: parcels = [], isLoading } = useQuery({
         queryKey: ["assignableParcels"],
         queryFn: async () => {
             const res = await axiosSecure.get("/parcels", {
@@ -32,34 +35,42 @@ const AssignRider = () => {
     });
 
     /* ================= ASSIGN RIDER ================= */
-    // const assignMutation = useMutation(
-    //     async ({ parcelId, rider }) => {
-    //         return axiosSecure.patch(`/parcels/${parcelId}/assign`, { riderId: rider._id });
-    //     },
-    //     {
-    //         onSuccess: () => {
-    //             Swal.fire("Success", "Rider assigned and status updated!", "success");
-    //             setIsOpen(false);
-    //             refetch(); // refresh parcel list
-    //         },
-    //         onError: () => {
-    //             Swal.fire("Error", "Assignment failed", "error");
-    //         },
-    //     }
-    // );
-    const assignRider = async ({ parcelId, rider }) => {
-        try {
-            // 1️⃣ Update parcel and rider in backend
-            await axiosSecure.patch(`/parcels/${parcelId}/assign`, { riderId: rider._id });
+    const { mutateAsync: assignRider } = useMutation({
+        mutationFn: async ({ parcelId, rider }) => {
+            const res = await axiosSecure.patch(`/parcels/${parcelId}/assign`, {
+                riderId: rider._id,
+                riderName: rider.name,
+                // riderEmail:rider.email,
+            });
+            return res.data;
+        },
 
-            Swal.fire("Success", "Rider assigned and status updated!", "success");
-            setIsOpen(false);
-            refetch(); // refresh parcel list
-        } catch (err) {
-            console.error(err);
-            Swal.fire("Error", "Assignment failed", "error");
-        }
-    };
+        onSuccess: () => {
+            // 🔄 refetch assignable parcels
+            queryClient.invalidateQueries(['assignableParcels']);
+
+            // ✅ success alert
+            Swal.fire({
+                icon: 'success',
+                title: 'Rider Assigned',
+                text: 'The rider has been successfully assigned to this parcel.',
+                confirmButtonColor: '#4f46e5',
+            });
+        },
+
+        onError: (error) => {
+            console.error(error);
+
+            // ❌ error alert
+            Swal.fire({
+                icon: 'error',
+                title: 'Assignment Failed',
+                text: error?.response?.data?.message || 'Something went wrong!',
+                confirmButtonColor: '#ef4444',
+            });
+        },
+    });
+
 
     /* ================= OPEN MODAL ================= */
     const openAssignModal = async (parcel) => {
@@ -226,11 +237,19 @@ const AssignRider = () => {
                                                 </td>
                                                 <td className="p-3 text-center">
                                                     <button
-                                                        onClick={() => assignRider({ parcelId: selectedParcel._id, rider })}
+                                                        onClick={async () => {
+                                                            await assignRider({
+                                                                parcelId: selectedParcel._id,
+                                                                rider,
+                                                            });
+                                                            setIsOpen(false);
+                                                        }}
                                                         className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded"
                                                     >
                                                         Assign
                                                     </button>
+
+
 
 
                                                 </td>

@@ -21,7 +21,7 @@ function useAxiosSecure() {
         return res;
     }, err => {
         console.log('Inside res interceptor', err);
-        const status = err.status;
+        const status = err.response?.status;
         if (status === 403) {
             navigate('/forbidden');
         }

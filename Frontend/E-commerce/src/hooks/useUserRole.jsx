@@ -8,7 +8,7 @@ const useUserRole = () => {
     const axiosSecure = useAxiosSecure();
 
     const {
-        data = { role: 'user' }, // ✅ default object
+        data = { role: 'user' },
         isLoading,
         isError,
         refetch,
