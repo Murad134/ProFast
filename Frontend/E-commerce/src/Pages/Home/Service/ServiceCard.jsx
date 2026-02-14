@@ -1,5 +1,3 @@
-
-// src/components/services/ServiceCard.jsx
 import React from "react";
 
 export default function ServiceCard({ service }) {

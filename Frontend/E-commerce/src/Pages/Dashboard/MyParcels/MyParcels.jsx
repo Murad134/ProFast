@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 function MyParcels() {
+
     const { user } = useAuth();
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
@@ -20,8 +21,6 @@ function MyParcels() {
             return res.data;
         }
     });
-
-    
 
     const handleView = (id) => {
         const parcel = parcels.find(p => p._id === id);
@@ -150,7 +149,7 @@ function MyParcels() {
                                             : 'Non-Document'}
                                     </span>
                                 </td>
-                                <td>{new Date(parcel.creation_date).toLocaleDateString()}</td>
+                                <td>{new Date(parcel.created_at).toLocaleDateString()}</td>
                                 <td>TK {parcel.DeliveryCost}</td>
                                 <td>
                                     {/* ✅ UPDATED: Better payment status display with proper capitalization check */}
@@ -203,5 +202,4 @@ function MyParcels() {
         </div>
     );
 }
-
 export default MyParcels;

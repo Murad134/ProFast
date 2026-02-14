@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import ProfastlogoF from '../Pages/Shared/ProFastLogo/ProfastlogoF.jsx';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaHourglassHalf, FaSearchLocation, FaUserEdit, FaCheckCircle, FaUserShield, FaUserCheck } from 'react-icons/fa';
+import { FaHome, FaBoxOpen, FaCheckDouble, FaMoneyCheckAlt, FaHourglassHalf, FaSearchLocation, FaTruckMoving, FaUserEdit, FaCheckCircle, FaUserShield, FaUserCheck } from 'react-icons/fa';
 import useUserRole from '../hooks/useUserRole.jsx'
 function Dashboard() {
     const { role, isLoading } = useUserRole();
@@ -78,6 +78,29 @@ function Dashboard() {
                             Update Profile
                         </NavLink>
                     </li>
+
+                    {/* Rider route */}
+                    <li>
+                        <NavLink to="/dashboard/pendingdeliveries">
+                            <FaTruckMoving className="inline mr-2" />
+                            Pending Deliveries
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/completeddeliveries">
+                            <FaCheckDouble className="inline mr-2" />
+                            Completed Deliveries
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/myearnings">
+                            <FaMoneyCheckAlt className="inline mr-2" />
+                            My Earnings
+                        </NavLink>
+                    </li>
+
+
+                    {/* Admin route */}
                     {
                         !isLoading && role === 'admin' &&
                         <>

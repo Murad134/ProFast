@@ -10,7 +10,7 @@ const AssignRider = () => {
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
 
-    
+
     const [selectedParcel, setSelectedParcel] = useState(null);
     const [riders, setRiders] = useState([]);
     const [loadingRiders, setLoadingRiders] = useState(false);
@@ -23,7 +23,7 @@ const AssignRider = () => {
             const res = await axiosSecure.get("/parcels", {
                 params: {
                     payment_status: "Paid",
-                    delivery_status: "not_collected",
+                    delivery_status: 'pending',
                 },
             });
 
@@ -41,7 +41,7 @@ const AssignRider = () => {
             const res = await axiosSecure.patch(`/parcels/${parcelId}/assign`, {
                 riderId: rider._id,
                 riderName: rider.name,
-                // riderEmail:rider.email,
+                riderEmail: rider.email,
             });
             return res.data;
         },
