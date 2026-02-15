@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-// import { useQuery } from "@tanstack/react-query";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Dialog } from "@headlessui/react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useTrackingLogger from "../../../hooks/useTrackingLogger";
+import useAuth from "../../../hooks/useAuth";
 
 const AssignRider = () => {
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
-
+    const { logTrackingUpdate } = useTrackingLogger();
+    const { user } = useAuth();
 
     const [selectedParcel, setSelectedParcel] = useState(null);
+    const [selectedRider, setSelectedRider] = useState(null);
     const [riders, setRiders] = useState([]);
     const [loadingRiders, setLoadingRiders] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +29,6 @@ const AssignRider = () => {
                     delivery_status: 'pending',
                 },
             });
-
             return res.data.sort(
                 (a, b) =>
                     new Date(a.created_at || a.creation_date) -
@@ -38,6 +40,7 @@ const AssignRider = () => {
     /* ================= ASSIGN RIDER ================= */
     const { mutateAsync: assignRider } = useMutation({
         mutationFn: async ({ parcelId, rider }) => {
+            setSelectedRider(rider);
             const res = await axiosSecure.patch(`/parcels/${parcelId}/assign`, {
                 riderId: rider._id,
                 riderName: rider.name,
@@ -45,8 +48,7 @@ const AssignRider = () => {
             });
             return res.data;
         },
-
-        onSuccess: () => {
+        onSuccess: async () => {
             // 🔄 refetch assignable parcels
             queryClient.invalidateQueries(['assignableParcels']);
 
@@ -57,8 +59,15 @@ const AssignRider = () => {
                 text: 'The rider has been successfully assigned to this parcel.',
                 confirmButtonColor: '#4f46e5',
             });
+            // track rider assigned
+            await logTrackingUpdate({
+                trackingId: selectedParcel.trackingId,
+                status: "rider_assigned",
+                details: `Assigned to ${selectedRider.name}`,
+                location: selectedParcel.senderServiceCenter,
+                updated_by: user.email,
+            });
         },
-
         onError: (error) => {
             console.error(error);
 
@@ -71,7 +80,6 @@ const AssignRider = () => {
             });
         },
     });
-
 
     /* ================= OPEN MODAL ================= */
     const openAssignModal = async (parcel) => {
@@ -94,7 +102,6 @@ const AssignRider = () => {
             setLoadingRiders(false);
         }
     };
-
 
     /* ================= LOADING ================= */
     if (isLoading) {
@@ -249,10 +256,6 @@ const AssignRider = () => {
                                                     >
                                                         Assign
                                                     </button>
-
-
-
-
                                                 </td>
                                             </tr>
                                         ))}

@@ -2,17 +2,19 @@ import React from 'react'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { useParams, useNavigate } from 'react-router-dom'; // ✅ ADDED: useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import { Form } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useAuth from '../../../hooks/useAuth';
+import useTrackingLogger from '../../../hooks/useTrackingLogger';
 
 function PaymentForm() {
     const { user } = useAuth();
     const stripe = useStripe();
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
+    const { logTrackingUpdate } = useTrackingLogger();
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -64,7 +66,6 @@ function PaymentForm() {
                 amountInCents,
                 id
             })
-
             // step-3 confirm card payment
             const clientSecret = res.data.clientSecret;
             const result = await stripe.confirmCardPayment(clientSecret, {
@@ -76,7 +77,6 @@ function PaymentForm() {
                     },
                 }
             });
-
             if (result.error) {
                 setError(result.error.message);
             }
@@ -95,8 +95,6 @@ function PaymentForm() {
                         transactionId: result.paymentIntent.id,
                         paymentMethod: result.paymentIntent.payment_method,
                     }
-
-
                     const paymentRes = await axiosSecure.post('/payments', paymentData);
                     if (paymentRes.data.insertedId) {
                         Swal.fire({
@@ -105,8 +103,15 @@ function PaymentForm() {
                             html: `<strong>Transaction ID:</strong><code>${transactionId}</code>`,
                             confirmButtonText: 'Go to My Parcels',
                             allowOutsideClick: false,
-                        }).then((result) => {
+                        }).then(async (result) => {
                             if (result.isConfirmed) {
+                                await logTrackingUpdate({
+                                    trackingId: parcelInfo.data.trackingId,
+                                    status: "payment_done",
+                                    details: `paid by ${user.displayName}`,
+                                    location: parcelInfo.data.senderServiceCenter,
+                                    updated_by: user.email,
+                                })
                                 navigate('/dashboard/myparcels');
                             }
                         });
@@ -116,7 +121,6 @@ function PaymentForm() {
             }
         }
     }
-
     return (
         <div>
             <Form onSubmit={handleSubmit} className='space-y-4 bg-white p-6 rounded-xl shadow-md w-full max-w-md mx-auto'>

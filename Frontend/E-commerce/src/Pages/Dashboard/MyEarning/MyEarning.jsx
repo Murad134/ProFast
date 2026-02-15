@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import {  isToday, isThisWeek, isThisMonth, isThisYear, parseISO } from "date-fns";
+import { isToday, isThisWeek, isThisMonth, isThisYear, parseISO } from "date-fns";
 
 const MyEarnings = () => {
     const axiosSecure = useAxiosSecure();
@@ -30,22 +30,22 @@ const MyEarnings = () => {
     // Filter parcels by date
     const filteredParcels = Array.isArray(data)
         ? data.filter((parcel) => {
-              if (!parcel.deliveredTime) return false;
-              const deliveredDate = parseISO(parcel.deliveredTime);
-              switch (filter) {
-                  case "today":
-                      return isToday(deliveredDate);
-                  case "week":
-                      return isThisWeek(deliveredDate);
-                  case "month":
-                      return isThisMonth(deliveredDate);
-                  case "year":
-                      return isThisYear(deliveredDate);
-                  case "overall":
-                  default:
-                      return true;
-              }
-          })
+            if (!parcel.deliveredTime) return false;
+            const deliveredDate = parseISO(parcel.deliveredTime);
+            switch (filter) {
+                case "today":
+                    return isToday(deliveredDate);
+                case "week":
+                    return isThisWeek(deliveredDate);
+                case "month":
+                    return isThisMonth(deliveredDate);
+                case "year":
+                    return isThisYear(deliveredDate);
+                case "overall":
+                default:
+                    return true;
+            }
+        })
         : [];
 
     // Calculate totals
@@ -68,9 +68,8 @@ const MyEarnings = () => {
                     <button
                         key={f}
                         onClick={() => setFilter(f)}
-                        className={`px-3 py-1 rounded font-semibold ${
-                            filter === f ? "bg-blue-600 text-white" : "bg-gray-200"
-                        }`}
+                        className={`px-3 py-1 rounded font-semibold ${filter === f ? "bg-blue-600 text-white" : "bg-gray-200"
+                            }`}
                     >
                         {f.charAt(0).toUpperCase() + f.slice(1)}
                     </button>

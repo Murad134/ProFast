@@ -6,6 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useNavigate } from "react-router-dom";
+import useTrackingLogger from '../../hooks/useTrackingLogger';
 
 const generateTrackingId = () => {
     const date = new Date();
@@ -27,6 +28,7 @@ const ParcelDeliveryForm = () => {
     const [showModal, setShowModal] = useState(false);
     const [formData,] = useState(null);
     const navigate = useNavigate();
+    const { logTrackingUpdate } = useTrackingLogger();
 
     const {
         register,
@@ -150,6 +152,8 @@ const ParcelDeliveryForm = () => {
             cancelButtonColor: '#6b7280',
         }).then((result) => {
             if (result.isConfirmed) {
+
+                const tracking_id = generateTrackingId();
                 const finalData = {
                     ...data,
                     DeliveryCost: total,
@@ -157,7 +161,7 @@ const ParcelDeliveryForm = () => {
                     payment_status: 'unpaid',
                     delivery_status: 'not_collected',
                     creation_date: new Date().toISOString(),
-                    trackingId: generateTrackingId(),
+                    trackingId: tracking_id,
 
                 };
 
@@ -165,7 +169,7 @@ const ParcelDeliveryForm = () => {
 
                 // Send data to server
                 axiosSecure.post('/parcels', finalData)
-                    .then(response => {
+                    .then(async (response) => {
                         if (response.data.insertedId) {
 
                             // TODO: redirect to a payment parcel
@@ -175,11 +179,17 @@ const ParcelDeliveryForm = () => {
                                 icon: 'success',
                                 confirmButtonColor: '#4f46e5',
                             });
+                            await logTrackingUpdate({
+                                trackingId: finalData.trackingId,
+                                status: "parcel_created",
+                                details: `Parcel submitted by ${user.displayName}`,
+                                location: data.senderServiceCenter,
+                                updated_by: user.email,
+                            });
                             navigate('/dashboard/myparcels')
                         }
                         console.log('Server Response:', response.data);
                     })
-
 
                 reset();
 

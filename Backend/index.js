@@ -70,7 +70,7 @@ async function run() {
     const db = client.db('parcelsend');
     const parcelsCollection = db.collection('parcels');
     const paymentsCollection = db.collection('payments');
-    const trackingCollection = db.collection("tracking");
+    const trackingCollection = db.collection("trackingUpdates");
     const usersCollection = db.collection("users");
     const ridersCollection = db.collection("riders");
 
@@ -377,38 +377,6 @@ async function run() {
     });
 
     // Pending riders  api for Approve or rejected
-    // app.patch('/riders/:id/status', async (req, res) => {
-    //   const { id } = req.params;
-    //   const { status, email } = req.body;
-    //   const query = { _id: new ObjectId(id) }
-    //   const updateDoc = {
-    //     $set: {
-    //       status
-    //     }
-    //   }
-    //   try {
-    //     const result = await ridersCollection.updateOne(
-    //       query, updateDoc
-    //     );
-
-    //     // update user role for accepting rider
-    //     if (status === 'active') {
-    //       const userQuery = { email };
-    //       const userUpdateDoc = {
-    //         $set: {
-    //           role: 'rider'
-    //         }
-    //       };
-    //       const roleResult = await usersCollection.updateOne(userQuery, userUpdateDoc)
-    //       console.log(roleResult.modifiedCount)
-    //     }
-
-    //     res.send(result);
-    //   }
-    //   catch (err) {
-    //     res.status(500).send({ message: 'Failed to update rider status' });
-    //   }
-    // });
     app.patch('/riders/:id/status', async (req, res) => {
       const { id } = req.params;
       const { status, email } = req.body;
@@ -466,55 +434,6 @@ async function run() {
         res.status(500).send({ message: 'Failed to load riders' });
       }
     })
-
-    // app.patch('/parcels/:id/status', async (req, res) => {
-    //   const id = req.params.id;
-    //   const { status } = req.body;
-
-    //   try {
-    //     const result = await parcelsCollection.updateOne(
-    //       { _id: new ObjectId(id) },
-    //       { $set: { delivery_status: status } }
-    //     );
-
-    //     res.send({
-    //       success: true,
-    //       modifiedCount: result.modifiedCount,
-    //       message: 'Parcel status updated successfully',
-    //     });
-    //   } catch (err) {
-    //     console.error(err);
-    //     res.status(500).send({
-    //       success: false,
-    //       message: 'Failed to update parcel status',
-    //     });
-    //   }
-    // });
-
-    // // Load Completed parcels
-    // app.get('/rider/completedparcels', async (req, res) => {
-    //   try {
-    //     const email = req.query.email;
-    //     if (!email) {
-    //       return res.status(400).send({ message: 'Rider email is required' });
-    //     }
-    //     const query = {
-    //       assignedRider_email: email,
-    //       delivery_status: { $in: ['delivered', 'service_center_delivered'] }
-    //     };
-    //     const options = {
-    //       sort: { created_at: -1 },
-    //     };
-    //     const completedParcels = await parcelsCollection.find(query, options).toArray();
-    //     res.send(completedParcels);
-    //   }
-    //   catch (err) {
-    //     console.error('Error loading Completed parcels :', err);
-    //     res.status(500).send({ message: 'Failed to load completed deliveries' });
-    //   }
-
-    // })
-
 
     app.patch('/parcels/:id/status', async (req, res) => {
       const id = req.params.id;
@@ -749,50 +668,60 @@ async function run() {
 
     // -------------------- Tracking APIs --------------------
     // GET: Fetch tracking info by trackingId
-    // app.get("/tracking/:trackingId", async (req, res) => {
-    //   try {
-    //     const { trackingId } = req.params;
-
-    //     const data = await trackingCollection
-    //       .find({ trackingId })
-    //       .sort({ createdAt: 1 })
-    //       .toArray();
-
-    //     res.send(data);
-    //   } catch (err) {
-    //     res.status(500).send({ message: "Failed to fetch tracking" });
-    //   }
-    // });
-
-    // POST: Add tracking info
-    app.post("/tracking", async (req, res) => {
+    app.get("/tracking/:trackingId", async (req, res) => {
       try {
-        const {
-          tracking_Id,
-          parcel_Id,
-          status,
-          message,
-          update_by = ''
-        } = req.body;
-        const doc = {
-          tracking_Id,                     // MUST match frontend
-          parcel_Id: parcel_Id ? new ObjectId(parcel_Id) : null,
-          status,
-          message: message || "",
-          update_by: update_by || "",
-          createdAt: new Date()
-        };
+        const trackingId = req.params.trackingId;
 
-        const result = await trackingCollection.insertOne(doc);
+        const data = await trackingCollection
+          .find({ tracking_id: trackingId })
+          .sort({ createdAt: 1 })
+          .toArray();
 
-        res.send({
-          success: true,
-          insertedId: result.insertedId
-        });
+        res.send(data);
       } catch (err) {
-        res.status(500).send({ message: "Failed to add tracking" });
+        res.status(500).send({ message: "Failed to fetch tracking" });
       }
     });
+    app.post('/tracking', async (req, res) => {
+      const update = req.body;
+      update.createdAt = new Date();
+      if (!update.tracking_id || !update.status) {
+        return res.status(400).json({ message: 'tracking id and status are required' });
+      }
+      const result = await trackingCollection.insertOne(update);
+      res.status(201).json(result);
+    })
+
+
+    // // POST: Add tracking info
+    // app.post("/tracking", async (req, res) => {
+    //   try {
+    //     const {
+    //       tracking_Id,
+    //       parcel_Id,
+    //       status,
+    //       message,
+    //       update_by = ''
+    //     } = req.body;
+    //     const doc = {
+    //       tracking_Id,                     // MUST match frontend
+    //       parcel_Id: parcel_Id ? new ObjectId(parcel_Id) : null,
+    //       status,
+    //       message: message || "",
+    //       update_by: update_by || "",
+    //       createdAt: new Date()
+    //     };
+
+    //     const result = await trackingCollection.insertOne(doc);
+
+    //     res.send({
+    //       success: true,
+    //       insertedId: result.insertedId
+    //     });
+    //   } catch (err) {
+    //     res.status(500).send({ message: "Failed to add tracking" });
+    //   }
+    // });
 
     // -------------------- Image Upload API with Cloudinary --------------------
     app.post("/upload-image", upload.single("image"), async (req, res) => {
