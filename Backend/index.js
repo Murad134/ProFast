@@ -350,6 +350,29 @@ async function run() {
       }
     });
 
+
+    // Counts how many parcels exist for each delivery_status
+    // Uses MongoDB aggregation ($group) to return status-wise totals
+    app.get('/parcels/delivery/status-count', async (req, res) => {
+      const pipeline = [
+        {
+          $group: {
+            _id: '$delivery_status',
+            count: { $sum: 1 }
+          }
+        }, {
+          $project: {
+            status: '$_id',
+            count: 1,
+            _id: 0,
+          }
+        }
+      ];
+      const result = await parcelsCollection.aggregate(pipeline).toArray();
+      res.send(result);
+    });
+
+
     // Rider registration API (placeholder, implement as needed)
     app.post('/riders', verifyFBToken, async (req, res) => {
       const rider = req.body;
@@ -691,37 +714,6 @@ async function run() {
       const result = await trackingCollection.insertOne(update);
       res.status(201).json(result);
     })
-
-
-    // // POST: Add tracking info
-    // app.post("/tracking", async (req, res) => {
-    //   try {
-    //     const {
-    //       tracking_Id,
-    //       parcel_Id,
-    //       status,
-    //       message,
-    //       update_by = ''
-    //     } = req.body;
-    //     const doc = {
-    //       tracking_Id,                     // MUST match frontend
-    //       parcel_Id: parcel_Id ? new ObjectId(parcel_Id) : null,
-    //       status,
-    //       message: message || "",
-    //       update_by: update_by || "",
-    //       createdAt: new Date()
-    //     };
-
-    //     const result = await trackingCollection.insertOne(doc);
-
-    //     res.send({
-    //       success: true,
-    //       insertedId: result.insertedId
-    //     });
-    //   } catch (err) {
-    //     res.status(500).send({ message: "Failed to add tracking" });
-    //   }
-    // });
 
     // -------------------- Image Upload API with Cloudinary --------------------
     app.post("/upload-image", upload.single("image"), async (req, res) => {

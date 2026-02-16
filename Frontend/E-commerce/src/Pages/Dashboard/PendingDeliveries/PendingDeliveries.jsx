@@ -29,7 +29,7 @@ function PendingDeliveries() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['riderParcels']);
-      queryClient.invalidateQueries(['completedParcels']); // ✅ Refresh completed list too
+      queryClient.invalidateQueries(['completedParcels']);
     },
   });
 
@@ -184,5 +184,4 @@ function PendingDeliveries() {
     </div>
   );
 }
-
 export default PendingDeliveries;

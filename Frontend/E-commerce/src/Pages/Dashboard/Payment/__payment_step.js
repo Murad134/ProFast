@@ -6,4 +6,23 @@
 --5 confirm payment 
 --6 after payment is successful : update payment status on the parcel also enter an entry in the parcel
     in the parcel history collection
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------
+                            Payment
+---------------------------------------------------------------
+1. Take card information (use Stripe- github & Stripe docs)
+2.Validate card information
+
 */
