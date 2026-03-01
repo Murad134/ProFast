@@ -12,7 +12,7 @@ const ActiveRiders = () => {
     const { data: riders = [], isLoading, refetch } = useQuery({
         queryKey: ['active-riders'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/riders/active');
+            const res = await axiosSecure.get('/rider/active');
             return res.data;
         }
     });
@@ -39,7 +39,7 @@ const ActiveRiders = () => {
 
             if (!confirm.isConfirmed) return;
 
-            await axiosSecure.patch(`/riders/${id}/status`, { status: 'inactive' });
+            await axiosSecure.patch(`/rider/${id}/status`, { status: 'inactive' });
             Swal.fire('Deactivated!', 'Rider has been deactivated.', 'success');
             refetch(); // Re-fetch the active riders
         } catch (error) {

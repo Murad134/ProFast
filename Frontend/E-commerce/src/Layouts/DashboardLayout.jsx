@@ -80,24 +80,29 @@ function Dashboard() {
                     </li>
 
                     {/* Rider route */}
-                    <li>
-                        <NavLink to="/dashboard/pendingdeliveries">
-                            <FaTruckMoving className="inline mr-2" />
-                            Pending Deliveries
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/completeddeliveries">
-                            <FaCheckDouble className="inline mr-2" />
-                            Completed Deliveries
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/myearnings">
-                            <FaMoneyCheckAlt className="inline mr-2" />
-                            My Earnings
-                        </NavLink>
-                    </li>
+                    {
+                        !isLoading && role === 'rider' &&
+                        <>
+                            <li>
+                                <NavLink to="/dashboard/pendingdeliveries">
+                                    <FaTruckMoving className="inline mr-2" />
+                                    Pending Deliveries
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/completeddeliveries">
+                                    <FaCheckDouble className="inline mr-2" />
+                                    Completed Deliveries
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/myearnings">
+                                    <FaMoneyCheckAlt className="inline mr-2" />
+                                    My Earnings
+                                </NavLink>
+                            </li>
+                        </>
+                    }
 
 
                     {/* Admin route */}

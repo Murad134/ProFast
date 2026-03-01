@@ -11,18 +11,15 @@ const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 // Load environment variables
 dotenv.config();
-
 // -------------------- Cloudinary Configuration --------------------
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
 // -------------------- Stripe Setup --------------------
 const Stripe = require("stripe");
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 // -------------------- Express App --------------------
 const app = express();
 const port = process.env.PORT || 3050;
@@ -373,6 +370,123 @@ async function run() {
     });
 
 
+    app.patch('/parcels/:id/status', async (req, res) => {
+      const id = req.params.id;
+      const { status } = req.body;
+
+      try {
+        // Build update document
+        const updateDoc = {
+          delivery_status: status,
+          updated_at: new Date()
+        };
+
+        if (status === 'in_transit') {
+          updateDoc.picked_at = new Date();
+        } else if (status === 'delivered') {
+          updateDoc.delivered_at = new Date();
+        }
+
+        const result = await parcelsCollection.updateOne(
+          { _id: new ObjectId(id) },
+          { $set: updateDoc }
+        );
+
+        console.log('Update Result:', result);
+
+        res.send({
+          success: true,
+          modifiedCount: result.modifiedCount,
+          message: 'Parcel status updated successfully',
+        });
+      } catch (err) {
+        console.error('❌ Error:', err);
+        res.status(500).send({
+          success: false,
+          message: 'Failed to update parcel status',
+        });
+      }
+    });
+    // Parcels id CashOut 
+    app.patch('/parcels/:id/cashout', async (req, res) => {
+      const id = req.params.id;
+      const result = await parcelsCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: { cashout_status: 'cashed_out', cashed_out_at: new Date() } }
+      );
+      res.send(result);
+    })
+
+    app.patch(
+      '/parcels/:id/assign',
+      verifyFBToken,
+      async (req, res) => {
+        const { id } = req.params;
+        const { riderId, riderName, riderEmail } = req.body;
+
+        try {
+          // 1️⃣ Update Parcel status and assign rider
+          const parcelResult = await parcelsCollection.updateOne(
+            { _id: new ObjectId(id) },
+            {
+              $set: {
+                assignedRider_id: riderId,
+                assignedRider_name: riderName,
+                assignedRider_email: riderEmail,
+                delivery_status: "assigned",
+              }
+            }
+          );
+          if (parcelResult.matchedCount === 0) {
+            return res.status(404).send({ message: "Parcel not found" });
+          }
+
+          // 2️⃣ Update Rider work status
+          const riderResult = await ridersCollection.updateOne(
+            { _id: new ObjectId(riderId) },
+            { $set: { work_status: "in-delivery" } }
+          );
+
+          if (riderResult.matchedCount === 0) {
+            return res.status(404).send({ message: "Rider not found" });
+          }
+
+          res.send({
+            success: true,
+            message: "Rider assigned and status updated successfully",
+          });
+        } catch (err) {
+          console.error(err);
+          res.status(500).send({ message: "Assignment failed" });
+        }
+      }
+    );
+    // ---------------------------Rider API ---------------------------------
+    //Get pending delivery tasks for a rider
+    app.get('/rider/parcels', async (req, res) => {
+      try {
+        const email = req.query.email;
+        if (!email) {
+          return res.status(400).send({ message: 'Rider email is required' });
+        }
+        const query = {
+          assignedRider_email: email,
+          delivery_status: { $in: ['assigned', 'in_transit'] },
+        };
+        const options = {
+          sort: { created_at: -1 },
+        };
+        const parcels = await parcelsCollection
+          .find(query, options)
+          .toArray();
+
+        res.send(parcels);
+      } catch (err) {
+        console.error('Error fetching rider tasks:', err);
+        res.status(500).send({ message: 'Failed to fetch rider tasks' });
+      }
+    });
+
     // Rider registration API (placeholder, implement as needed)
     app.post('/riders', verifyFBToken, async (req, res) => {
       const rider = req.body;
@@ -440,7 +554,6 @@ async function run() {
       }
     });
 
-
     // 🔐 Get eligible riders by district (ADMIN only)
     app.get('/riders/available', async (req, res) => {
       const { district } = req.query;
@@ -457,45 +570,6 @@ async function run() {
         res.status(500).send({ message: 'Failed to load riders' });
       }
     })
-
-    app.patch('/parcels/:id/status', async (req, res) => {
-      const id = req.params.id;
-      const { status } = req.body;
-
-      try {
-        // Build update document
-        const updateDoc = {
-          delivery_status: status,
-          updated_at: new Date()
-        };
-
-        if (status === 'in_transit') {
-          updateDoc.picked_at = new Date();
-        } else if (status === 'delivered') {
-          updateDoc.delivered_at = new Date();
-        }
-
-        const result = await parcelsCollection.updateOne(
-          { _id: new ObjectId(id) },
-          { $set: updateDoc }
-        );
-
-        console.log('Update Result:', result);
-
-        res.send({
-          success: true,
-          modifiedCount: result.modifiedCount,
-          message: 'Parcel status updated successfully',
-        });
-      } catch (err) {
-        console.error('❌ Error:', err);
-        res.status(500).send({
-          success: false,
-          message: 'Failed to update parcel status',
-        });
-      }
-    });
-
 
     app.get('/rider/completedparcels', async (req, res) => {
       try {
@@ -530,86 +604,6 @@ async function run() {
       }
     });
 
-    // Parcels id CashOut 
-    app.patch('/parcels/:id/cashout', async (req, res) => {
-      const id = req.params.id;
-      const result = await parcelsCollection.updateOne(
-        { _id: new ObjectId(id) },
-        { $set: { cashout_status: 'cashed_out', cashed_out_at: new Date() } }
-      );
-      res.send(result);
-    })
-
-    app.patch(
-      '/parcels/:id/assign',
-      verifyFBToken,
-      async (req, res) => {
-        const { id } = req.params;
-        const { riderId, riderName, riderEmail } = req.body;
-
-        try {
-          // 1️⃣ Update Parcel status and assign rider
-          const parcelResult = await parcelsCollection.updateOne(
-            { _id: new ObjectId(id) },
-            {
-              $set: {
-                assignedRider_id: riderId,
-                assignedRider_name: riderName,
-                assignedRider_email: riderEmail,
-                delivery_status: "assigned",
-              }
-            }
-          );
-          if (parcelResult.matchedCount === 0) {
-            return res.status(404).send({ message: "Parcel not found" });
-          }
-
-          // 2️⃣ Update Rider work status
-          const riderResult = await ridersCollection.updateOne(
-            { _id: new ObjectId(riderId) },
-            { $set: { work_status: "in-delivery" } }
-          );
-
-          if (riderResult.matchedCount === 0) {
-            return res.status(404).send({ message: "Rider not found" });
-          }
-
-          res.send({
-            success: true,
-            message: "Rider assigned and status updated successfully",
-          });
-        } catch (err) {
-          console.error(err);
-          res.status(500).send({ message: "Assignment failed" });
-        }
-      }
-    );
-
-
-    //Get pending delivery tasks for a rider
-    app.get('/rider/parcels', async (req, res) => {
-      try {
-        const email = req.query.email;
-        if (!email) {
-          return res.status(400).send({ message: 'Rider email is required' });
-        }
-        const query = {
-          assignedRider_email: email,
-          delivery_status: { $in: ['assigned', 'in_transit'] },
-        };
-        const options = {
-          sort: { created_at: -1 },
-        };
-        const parcels = await parcelsCollection
-          .find(query, options)
-          .toArray();
-
-        res.send(parcels);
-      } catch (err) {
-        console.error('Error fetching rider tasks:', err);
-        res.status(500).send({ message: 'Failed to fetch rider tasks' });
-      }
-    });
     // -------------------- Payment APIs --------------------
     // GET: Fetch payments by user email, sorted by latest
     app.get('/payments', verifyFBToken, async (req, res) => {
@@ -689,7 +683,7 @@ async function run() {
       }
     });
 
-    // -------------------- Tracking APIs --------------------
+    // --------------------------------Tracking APIs --------------------------------------
     // GET: Fetch tracking info by trackingId
     app.get("/tracking/:trackingId", async (req, res) => {
       try {

@@ -89,7 +89,7 @@ const AssignRider = () => {
         setRiders([]);
 
         try {
-            const res = await axiosSecure.get("/riders/available", {
+            const res = await axiosSecure.get("/rider/available", {
                 params: {
                     district: parcel.senderServiceCenter,
                 },

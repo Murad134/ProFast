@@ -62,7 +62,7 @@ function PaymentForm() {
             console.log('PaymentMethod', paymentMethod);
 
             // step-2 Create payment intent on the server
-            const res = await axiosSecure.post('/create-payment-intent', {
+            const res = await axiosSecure.post('/payments/create-payment-intent', {
                 amountInCents,
                 id
             })

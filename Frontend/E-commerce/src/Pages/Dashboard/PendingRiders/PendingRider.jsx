@@ -12,7 +12,7 @@ const PendingRiders = () => {
     const { isLoading, data: riders = [], refetch } = useQuery({
         queryKey: ['pending-riders'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/riders/pending');
+            const res = await axiosSecure.get('/rider/pending');
             return res.data;
         }
     });
@@ -33,7 +33,7 @@ const PendingRiders = () => {
 
         try {
             const status = action === 'approve' ? 'active' : 'rejected'
-            await axiosSecure.patch(`/riders/${id}/status`, {
+            await axiosSecure.patch(`/rider/${id}/status`, {
                 status, email
             });
             refetch(); // refresh the list
