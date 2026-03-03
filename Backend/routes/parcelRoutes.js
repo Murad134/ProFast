@@ -11,8 +11,8 @@ router.post("/", verifyFBToken, addParcel);
 router.get("/", verifyFBToken, fetchParcels);
 
 //  🔎 Get parcel count grouped by delivery status
-router.get("/delivery/status-count", verifyFBToken, fetchParcelStatusCount);
-
+router.get("/delivery/status-count",verifyFBToken,fetchParcelStatusCount);
+    
 // 🔎 Get parcel by ID
 router.get("/:id", verifyFBToken, getParcelById);
 

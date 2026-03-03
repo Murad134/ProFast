@@ -2,3 +2,5 @@ node_modules
 dist
 .env 
 firebase-admin_key.json
+convertKey.js
+encoded_key.txt
