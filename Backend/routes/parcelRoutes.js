@@ -2,32 +2,39 @@ const express = require("express");
 const router = express.Router();
 const { addParcel ,fetchParcels,assignRiderToParcel,getParcelById,updateParcel,  removeParcel,updateParcelStatus,cashoutParcel,fetchParcelStatusCount} = require("../controllers/parcelController");
 const verifyFBToken = require("../middleware/verifyFBToken");
-
+const verifyAdmin = require("../middleware/verifyAdmin");
+const verifyRider = require("../middleware/verifyRider");
 // ➕ Create a new parcel
-router.post("/", verifyFBToken, addParcel);
+router.post("/",verifyFBToken, addParcel);
+
+
+
+
+
+
 
 // 🔎 Get parcels with optional filters
-router.get("/", fetchParcels);
+router.get("/",verifyFBToken, fetchParcels);
 
 //  🔎 Get parcel count grouped by delivery status
-router.get("/delivery/status-count", fetchParcelStatusCount);
+router.get("/delivery/status-count",verifyFBToken, fetchParcelStatusCount);
 
 // 🔎 Get parcel by ID
-router.get("/:id", getParcelById);
+router.get("/:id",verifyFBToken, getParcelById);
 
 // 🔄 Update parcel by ID
-router.patch("/:id", updateParcel);
+router.patch("/:id", verifyFBToken, updateParcel);
 
 // ❌ Delete parcel by ID
-router.delete("/:id", removeParcel);
+router.delete("/:id",verifyFBToken, removeParcel);
 
 // ➕ Assign rider to parcel
-router.patch("/:id/assign", assignRiderToParcel);
+router.patch("/:id/assign",verifyFBToken, assignRiderToParcel);
 
 //  🔄 Update parcel delivery status
-router.patch("/:id/status", updateParcelStatus);
+router.patch("/:id/status",verifyFBToken,verifyRider, updateParcelStatus);
 
 //  🔄 Cashout parcel
-router.patch("/:id/cashout", cashoutParcel);
+router.patch("/:id/cashout", verifyFBToken, cashoutParcel);
 
 module.exports = router;

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { useForm } from 'react-hook-form'
+import { sendEmailVerification } from "firebase/auth";
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth'
 import { useState } from 'react';
@@ -8,55 +10,79 @@ import SocialLogin from '../SocialLogin/SocialLogin';
 import useAxios from '../../../hooks/useAxios';
 import { useNavigate, useLocation } from 'react-router-dom';
 function Register() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { createUser, updateUserProfile } = useAuth();
     const [photoURL, setPhotoURL] = useState("");
     const axiosInstance = useAxios();
     const location = useLocation();
+
     const navigate = useNavigate();
     const from = location.state?.from || '/';
 
-    const onSubmit = data => {
+    const onSubmit = async (data) => {
+        try {
 
-        if (!photoURL) {
-            alert("Please upload a photo.");
-            return;
+            if (!photoURL) {
+                Swal.fire({
+                    title: "Photo Required",
+                    text: "Please upload a photo.",
+                    icon: "warning"
+                });
+                return;
+            }
+
+            // 1️⃣ Create Firebase user
+            const result = await createUser(data.email, data.password);
+            const user = result.user;
+
+
+            // 2️⃣ Send email verification (always send)
+            await sendEmailVerification(user);
+
+
+            // 3️⃣ Update user Firebase profile
+            await updateUserProfile({
+                displayName: data.name,
+                photoURL: photoURL,
+            });
+            // updateProfile(auth.currentUser, {
+            //     displayName: data.name,
+            //     photoURL: photoURL,
+            // });
+            // // 4️⃣ Save user in database
+            const userInfo = {
+                email: data.email,
+                role: "user",
+                created_at: new Date().toISOString(),
+                last_log_in: new Date().toISOString(),
+            };
+
+            await axiosInstance.post("/users", userInfo);
+
+            // 5️⃣ Success message
+            Swal.fire({
+                title: "Registration Successful!",
+                text: "Please verify your email before logging in.",
+                icon: "success",
+                confirmButtonText: "OK"
+            });
+
+            // Optional: logout user so they must verify first
+            // await logOut();
+
+            reset();
+            navigate("/login");
+
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                title: "Registration Failed",
+                text: error.message,
+                icon: "error"
+            });
         }
-
-        
-        createUser(data.email, data.password)
-            .then(async (result) => {
-                console.log(result.user);
-
-                // update userinfo in the database 
-                const userInfo = {
-                    email: data.email,
-                    role: 'user',
-                    created_at: new Date().toISOString(),
-                    last_log_in: new Date().toISOString(),
-                }
-
-                const userRes = await axiosInstance.post('/users', userInfo);
-                console.log('User info saved:', userRes.data);
-
-                // update user profile in firebase 
-                const userProfile = {
-                    displayName: data.name,
-                    photoURL: photoURL,
-                }
-                updateUserProfile(userProfile)
-                    .then(() => {
-                        console.log("User profile updated successfully");
-                        navigate(from);
-                    })
-                    .catch(error => {
-                        console.error("Failed to update user profile:", error);
-                    })
-            })
-            .catch(error => {
-                console.error(error);
-            })
     };
+
 
     const handleImageUpload = async (e) => {
         try {
@@ -66,7 +92,7 @@ function Register() {
             formData.append("image", image);
 
             const res = await axios.post(
-                "http://localhost:3050/upload-image",
+                "http://localhost:3050/api/upload-image",
                 formData
             );
 

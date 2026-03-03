@@ -55,17 +55,101 @@ const MakeAdmin = () => {
     };
 
     return (
-        <div className="p-6">
-            <h2 className="text-2xl font-bold mb-6">Make Admin</h2>
+        // <div className="p-6">
+        //     <h2 className="text-2xl font-bold mb-6">Make Admin</h2>
 
-            {/* Search */}
+        //     {/* Search */}
+        //     <form
+        //         onSubmit={(e) => {
+        //             e.preventDefault();
+        //             setSearchEnabled(true);
+        //             refetch();
+        //         }}
+        //         className="flex gap-2 mb-6 max-w-lg"
+        //     >
+        //         <input
+        //             type="email"
+        //             placeholder="Search user by email"
+        //             className="input input-bordered w-full"
+        //             value={email}
+        //             onChange={(e) => setEmail(e.target.value)}
+        //         />
+        //         <button className="btn btn-primary">Search</button>
+        //     </form>
+
+        //     {isLoading && <p>Loading...</p>}
+
+        //     {/* Result Table */}
+        //     {users.length > 0 && (
+        //         <div className="overflow-x-auto">
+        //             <table className="table table-zebra w-full">
+        //                 <thead>
+        //                     <tr>
+        //                         <th>#</th>
+        //                         <th>Email</th>
+        //                         <th>Role</th> {/* Role Section */}
+        //                         <th>Created At</th>
+        //                         <th>Action</th>
+        //                     </tr>
+        //                 </thead>
+        //                 <tbody>
+        //                     {users.map((user, index) => {
+        //                         const currentRole = user.role || 'user';
+        //                         const action = currentRole === 'admin' ? 'Remove Admin' : 'Make Admin';
+
+        //                         return (
+        //                             <tr key={user._id}>
+        //                                 <td>{index + 1}</td>
+        //                                 <td>{user.email}</td>
+        //                                 <td>
+        //                                     {/* Role Section */}
+        //                                     <span
+        //                                         className={`px-2 py-1 rounded text-sm font-semibold ${currentRole === 'admin'
+        //                                             ? 'bg-green-400 text-green-700'
+        //                                             : 'bg-gray-100 text-gray-700'
+        //                                             }`}
+        //                                     >
+        //                                         {currentRole.toUpperCase()}
+        //                                     </span>
+        //                                 </td>
+        //                                 <td>{user.created_at ? new Date(user.created_at).toLocaleString() : 'N/A'}</td>
+        //                                 <td>
+        //                                     <button
+        //                                         className={`btn btn-xs ${currentRole === 'admin' ? 'btn-error' : 'btn-success'
+        //                                             }`}
+        //                                         onClick={() => handleRoleChange(user._id, currentRole)}
+        //                                     >
+        //                                         {currentRole === 'admin' ? (
+        //                                             <FaUser className="mr-1" />
+        //                                         ) : (
+        //                                             <FaUserShield className="mr-1" />
+        //                                         )}
+        //                                         {action}
+        //                                     </button>
+        //                                 </td>
+        //                             </tr>
+        //                         );
+        //                     })}
+        //                 </tbody>
+        //             </table>
+        //         </div>
+        //     )}
+
+        //     {searchEnabled && users.length === 0 && (
+        //         <p className="text-red-500">No user found</p>
+        //     )}
+        // </div>
+        <div className="px-2 py-6 rounded-xl">
+            <h2 className="text-2xl font-bold mb-6 text-indigo-700">Make Admin</h2>
+
+            {/* ================= SEARCH FORM ================= */}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
                     setSearchEnabled(true);
                     refetch();
                 }}
-                className="flex gap-2 mb-6 max-w-lg"
+                className="flex flex-col sm:flex-row gap-2 mb-6 max-w-lg"
             >
                 <input
                     type="email"
@@ -74,49 +158,54 @@ const MakeAdmin = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <button className="btn btn-primary">Search</button>
+                <button className="btn btn-primary w-full sm:w-auto">Search</button>
             </form>
 
-            {isLoading && <p>Loading...</p>}
+            {isLoading && (
+                <p className="text-center text-gray-500 py-4">Loading...</p>
+            )}
 
-            {/* Result Table */}
+            {/* ================= DESKTOP/TABLET TABLE ================= */}
             {users.length > 0 && (
-                <div className="overflow-x-auto">
-                    <table className="table table-zebra w-full">
-                        <thead>
+                <div className="overflow-x-auto sm:block hidden rounded-lg shadow border border-gray-200">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-indigo-600 text-white text-sm uppercase">
                             <tr>
-                                <th>#</th>
-                                <th>Email</th>
-                                <th>Role</th> {/* Role Section */}
-                                <th>Created At</th>
-                                <th>Action</th>
+                                <th className="px-4 py-3 text-left">#</th>
+                                <th className="px-4 py-3 text-left">Email</th>
+                                <th className="px-4 py-3 text-left">Role</th>
+                                <th className="px-4 py-3 text-left hidden md:table-cell">Created At</th>
+                                <th className="px-4 py-3 text-left">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+
+                        <tbody className="bg-white divide-y divide-gray-200">
                             {users.map((user, index) => {
                                 const currentRole = user.role || 'user';
                                 const action = currentRole === 'admin' ? 'Remove Admin' : 'Make Admin';
-
                                 return (
-                                    <tr key={user._id}>
-                                        <td>{index + 1}</td>
-                                        <td>{user.email}</td>
-                                        <td>
-                                            {/* Role Section */}
+                                    <tr
+                                        key={user._id}
+                                        className="hover:bg-indigo-50 transition-colors duration-150"
+                                    >
+                                        <td className="px-4 py-3 text-gray-700">{index + 1}</td>
+                                        <td className="px-4 py-3 text-gray-800 truncate max-w-xs">{user.email}</td>
+                                        <td className="px-4 py-3">
                                             <span
                                                 className={`px-2 py-1 rounded text-sm font-semibold ${currentRole === 'admin'
-                                                    ? 'bg-green-400 text-green-700'
-                                                    : 'bg-gray-100 text-gray-700'
+                                                        ? 'bg-green-100 text-green-700'
+                                                        : 'bg-gray-100 text-gray-700'
                                                     }`}
                                             >
                                                 {currentRole.toUpperCase()}
                                             </span>
                                         </td>
-                                        <td>{user.created_at ? new Date(user.created_at).toLocaleString() : 'N/A'}</td>
-                                        <td>
+                                        <td className="px-4 py-3 hidden md:table-cell text-gray-500 text-sm">
+                                            {user.created_at ? new Date(user.created_at).toLocaleString() : 'N/A'}
+                                        </td>
+                                        <td className="px-4 py-3">
                                             <button
-                                                className={`btn btn-xs ${currentRole === 'admin' ? 'btn-error' : 'btn-success'
-                                                    }`}
+                                                className={`btn btn-xs ${currentRole === 'admin' ? 'btn-error' : 'btn-success'}`}
                                                 onClick={() => handleRoleChange(user._id, currentRole)}
                                             >
                                                 {currentRole === 'admin' ? (
@@ -135,9 +224,64 @@ const MakeAdmin = () => {
                 </div>
             )}
 
-            {searchEnabled && users.length === 0 && (
-                <p className="text-red-500">No user found</p>
-            )}
+            {/* ================= MOBILE CARD VIEW ================= */}
+            <div className="sm:hidden mt-4 space-y-4">
+                {users.length > 0 ? (
+                    users.map((user, index) => {
+                        const currentRole = user.role || 'user';
+                        const action = currentRole === 'admin' ? 'Remove Admin' : 'Make Admin';
+                        return (
+                            <div
+                                key={user._id}
+                                className="bg-white p-4 rounded-lg shadow border border-gray-200 divide-y divide-gray-100"
+                            >
+                                <div className="flex justify-between py-1">
+                                    <span className="font-semibold text-gray-600">#</span>
+                                    <span className="text-gray-800">{index + 1}</span>
+                                </div>
+                                <div className="flex justify-between py-1">
+                                    <span className="font-semibold text-gray-600">Email</span>
+                                    <span className="text-gray-800 truncate max-w-xs">{user.email}</span>
+                                </div>
+                                <div className="flex justify-between py-1">
+                                    <span className="font-semibold text-gray-600">Role</span>
+                                    <span
+                                        className={`px-2 py-1 rounded text-sm font-semibold ${currentRole === 'admin'
+                                                ? 'bg-green-100 text-green-700'
+                                                : 'bg-gray-100 text-gray-700'
+                                            }`}
+                                    >
+                                        {currentRole.toUpperCase()}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between py-1">
+                                    <span className="font-semibold text-gray-600">Created At</span>
+                                    <span className="text-gray-500 text-sm">
+                                        {user.created_at ? new Date(user.created_at).toLocaleString() : 'N/A'}
+                                    </span>
+                                </div>
+                                <div className="flex justify-center mt-2">
+                                    <button
+                                        className={`btn w-full ${currentRole === 'admin' ? 'btn-error' : 'btn-success'}`}
+                                        onClick={() => handleRoleChange(user._id, currentRole)}
+                                    >
+                                        {currentRole === 'admin' ? (
+                                            <FaUser className="mr-1" />
+                                        ) : (
+                                            <FaUserShield className="mr-1" />
+                                        )}
+                                        {action}
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    })
+                ) : (
+                    searchEnabled && (
+                        <p className="text-center text-red-500 py-4">No user found</p>
+                    )
+                )}
+            </div>
         </div>
     );
 };

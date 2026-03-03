@@ -24,6 +24,7 @@ import CompletedDeliveres from '../Pages/Dashboard/CompletedDeliveries/Completed
 import MyEarning from '../Pages/Dashboard/MyEarning/MyEarning.jsx'
 import RiderRoute from '../routes/RiderRoute.jsx'
 import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome.jsx";
+import AboutUs from "../Pages/AboutUs/AboutUs.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -47,7 +48,12 @@ const router = createBrowserRouter([
                 element: <PrivateRoute><BeARider></BeARider></PrivateRoute>,
                 loader: () => fetch('./districtsData.json').then(res => res.json())
 
-            }, {
+            },
+            {
+                path: 'aboutus',
+                element: <AboutUs/>
+            },
+            {
                 path: 'forbidden',
                 element: <Forbidden></Forbidden>
             }
@@ -74,8 +80,8 @@ const router = createBrowserRouter([
         </PrivateRoute>,
         children: [
             {
-                index:true,
-                element:<DashboardHome></DashboardHome>
+                index: true,
+                element: <DashboardHome></DashboardHome>
             },
             {
                 path: 'myparcels',

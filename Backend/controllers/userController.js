@@ -105,9 +105,34 @@ const changeUserRole = async (req, res) => {
   }
 };
 
+const checkUserExists = async (req, res) => {
+  const email = req.query.email;
+
+  if (!email) {
+    return res.status(400).send({ message: "Email is required" });
+  }
+
+  try {
+    const user = await getUserByEmail(email);
+
+    res.status(200).send({
+      exists: !!user,
+    });
+
+  } catch (error) {
+    console.error("Error checking user:", error);
+    res.status(500).send({ message: "Server error" });
+  }
+};
+
+
+
 module.exports = {
   searchUsers,
   getUserRole,
   createOrUpdateUser,
   changeUserRole,
+
+
+  checkUserExists
 };

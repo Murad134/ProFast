@@ -191,7 +191,7 @@ const AdminDashboardHome = () => {
     }
 
     return (
-        <div className="space-y-10 p-6">
+        <div className="space-y-10 px-2 py-4">
             <h2 className="text-4xl font-extrabold flex items-center gap-3 text-gray-800">
                 <FaBoxOpen className="text-blue-600" /> Admin Dashboard
             </h2>

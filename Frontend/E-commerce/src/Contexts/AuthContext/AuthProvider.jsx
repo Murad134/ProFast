@@ -23,9 +23,33 @@ function AuthProvider({ children }) {
         return signInWithPopup(auth, provider);
     }
 
-    const updateUserProfile = (profileInfo) => {
-        return updateProfile(auth.currentUser, profileInfo);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // const updateUserProfile = (profileInfo) => {
+    //     return updateProfile(auth.currentUser, profileInfo);
+    // }
+    const updateUserProfile = async (profileInfo) => {
+        await updateProfile(auth.currentUser, profileInfo);
+        await auth.currentUser.reload(); // Refresh user data
+        setUser({ ...auth.currentUser }); // Update user state with new data
     }
+
+
+
+
+
     const logOut = () => {
         setLoading(true)
         return signOut(auth)
