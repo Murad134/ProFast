@@ -9,7 +9,7 @@ router.post("/", createOrUpdateUser);
 router.get("/check", checkUserExists);
 
 router.get("/search", verifyFBToken, verifyAdmin, searchUsers);
-router.get("/:email/role",  getUserRole);
+router.get("/:email/role",verifyFBToken,  getUserRole);
 router.patch("/:id/role", verifyFBToken, verifyAdmin, changeUserRole);
 
 module.exports = router;

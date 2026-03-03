@@ -15,7 +15,7 @@ function Dashboard() {
                 {/* Navbar */}
                 <div className="navbar bg-base-300 w-full lg:hidden">
                     <div className="flex-none lg:hidden">
-                        <label htmlFor="my-drawer-2" aria-label="open sidebar" className="btn btn-square btn-ghost">
+                        <label htmlFor="my-drawer-3" aria-label="open sidebar" className="btn btn-square btn-ghost">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"

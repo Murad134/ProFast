@@ -69,6 +69,119 @@ function PendingDeliveries() {
   if (isLoading) return <div className="p-4">Loading parcels...</div>;
 
   return (
+    // <div className="p-6">
+    //   <h2 className="text-xl font-bold mb-4">
+    //     Pending Deliveries ({parcels.length})
+    //   </h2>
+
+    //   {/* ===== GRID HEADER (Desktop only) ===== */}
+    //   <div className="hidden md:grid grid-cols-10 gap-2 bg-gray-100 p-3 rounded font-semibold text-sm">
+    //     <div>#</div>
+    //     <div>Parcel</div>
+    //     <div>Type</div>
+    //     <div>Sender</div>
+    //     <div>Receiver</div>
+    //     <div>Center</div>
+    //     <div>Weight</div>
+    //     <div>Cost</div>
+    //     <div>Status</div>
+    //     <div>Action</div>
+    //   </div>
+
+    //   {/* ===== GRID ROWS ===== */}
+    //   {parcels.map((parcel, index) => (
+    //     <div
+    //       key={parcel._id}
+    //       className="
+    //         grid grid-cols-1
+    //         md:grid-cols-10
+    //         gap-2 p-3 border-b text-sm
+    //       "
+    //     >
+    //       <div>
+    //         <span className="md:hidden font-semibold">#:</span> {index + 1}
+    //       </div>
+
+    //       <div>
+    //         <span className="md:hidden font-semibold">Parcel:</span>
+    //         {parcel.parcelName}
+    //       </div>
+
+    //       <div>
+    //         <span className="md:hidden font-semibold">Type:</span>
+    //         {parcel.parcelType}
+    //       </div>
+
+    //       <div>
+    //         <span className="md:hidden font-semibold">Sender:</span>
+    //         {parcel.senderName}
+    //       </div>
+
+    //       <div>
+    //         <span className="md:hidden font-semibold">Receiver:</span>
+    //         {parcel.receiverName}
+    //       </div>
+
+    //       <div>
+    //         <span className="md:hidden font-semibold">Center:</span>
+    //         {parcel.receiverServiceCenter}
+    //       </div>
+
+    //       <div>
+    //         <span className="md:hidden font-semibold">Weight:</span>
+    //         {parcel.parcelWeight}
+    //       </div>
+
+    //       <div>
+    //         <span className="md:hidden font-semibold">Cost:</span>
+    //         TK {parcel.DeliveryCost}
+    //       </div>
+
+    //       <div>
+    //         <span
+    //           className={`badge ${parcel.delivery_status === 'assigned'
+    //             ? 'badge-warning'
+    //             : parcel.delivery_status === 'in_transit'
+    //               ? 'badge-info'
+    //               : 'badge-success'
+    //             }`}
+    //         >
+    //           {parcel.delivery_status.replace('_', ' ')}
+    //         </span>
+    //       </div>
+
+    //       <div className="flex gap-2">
+    //         {parcel.delivery_status === 'assigned' && (
+    //           <button
+    //             className="btn btn-xs btn-primary"
+    //             onClick={() =>
+    //               handleStatusUpdate(parcel, 'in_transit')
+    //             }
+    //           >
+    //             Pick Up
+    //           </button>
+    //         )}
+
+    //         {parcel.delivery_status === 'in_transit' && (
+    //           <button
+    //             className="btn btn-xs btn-success"
+    //             onClick={() =>
+    //               handleStatusUpdate(parcel, 'delivered')
+    //             }
+    //           >
+    //             Deliver
+    //           </button>
+    //         )}
+    //       </div>
+    //     </div>
+    //   ))}
+
+    //   {parcels.length === 0 && (
+    //     <p className="text-center mt-6 text-gray-500">
+    //       No pending deliveries
+    //     </p>
+    //   )}
+    // </div>
     <div className="p-6">
       <h2 className="text-xl font-bold mb-4">
         Pending Deliveries ({parcels.length})
@@ -92,82 +205,76 @@ function PendingDeliveries() {
       {parcels.map((parcel, index) => (
         <div
           key={parcel._id}
-          className="
-            grid grid-cols-1
-            md:grid-cols-10
-            gap-2 p-3 border-b text-sm
-          "
+          className="grid grid-cols-1 md:grid-cols-10 gap-2 p-3 border-b text-sm items-center"
         >
+          {/* Number */}
           <div>
             <span className="md:hidden font-semibold">#:</span> {index + 1}
           </div>
 
+          {/* Parcel Name */}
           <div>
-            <span className="md:hidden font-semibold">Parcel:</span>
-            {parcel.parcelName}
+            <span className="md:hidden font-semibold">Parcel:</span> {parcel.parcelName}
           </div>
 
+          {/* Type */}
           <div>
-            <span className="md:hidden font-semibold">Type:</span>
-            {parcel.parcelType}
+            <span className="md:hidden font-semibold">Type:</span> {parcel.parcelType}
           </div>
 
+          {/* Sender */}
           <div>
-            <span className="md:hidden font-semibold">Sender:</span>
-            {parcel.senderName}
+            <span className="md:hidden font-semibold">Sender:</span> {parcel.senderName}
           </div>
 
+          {/* Receiver */}
           <div>
-            <span className="md:hidden font-semibold">Receiver:</span>
-            {parcel.receiverName}
+            <span className="md:hidden font-semibold">Receiver:</span> {parcel.receiverName}
           </div>
 
+          {/* Center */}
           <div>
-            <span className="md:hidden font-semibold">Center:</span>
-            {parcel.receiverServiceCenter}
+            <span className="md:hidden font-semibold">Center:</span> {parcel.receiverServiceCenter}
           </div>
 
+          {/* Weight */}
           <div>
-            <span className="md:hidden font-semibold">Weight:</span>
-            {parcel.parcelWeight}
+            <span className="md:hidden font-semibold">Weight:</span> {parcel.parcelWeight}
           </div>
 
+          {/* Cost */}
           <div>
-            <span className="md:hidden font-semibold">Cost:</span>
-            TK {parcel.DeliveryCost}
+            <span className="md:hidden font-semibold">Cost:</span> TK {parcel.DeliveryCost}
           </div>
 
+          {/* Status */}
           <div>
             <span
               className={`badge ${parcel.delivery_status === 'assigned'
-                ? 'badge-warning'
-                : parcel.delivery_status === 'in_transit'
-                  ? 'badge-info'
-                  : 'badge-success'
+                  ? 'badge-warning'
+                  : parcel.delivery_status === 'in_transit'
+                    ? 'badge-info'
+                    : 'badge-success'
                 }`}
             >
               {parcel.delivery_status.replace('_', ' ')}
             </span>
           </div>
 
-          <div className="flex gap-2">
+          {/* Action Buttons */}
+          <div className="flex gap-2 flex-wrap">
             {parcel.delivery_status === 'assigned' && (
               <button
                 className="btn btn-xs btn-primary"
-                onClick={() =>
-                  handleStatusUpdate(parcel, 'in_transit')
-                }
+                onClick={() => handleStatusUpdate(parcel, 'in_transit')}
               >
                 Pick Up
               </button>
             )}
-
             {parcel.delivery_status === 'in_transit' && (
               <button
                 className="btn btn-xs btn-success"
-                onClick={() =>
-                  handleStatusUpdate(parcel, 'delivered')
-                }
+                onClick={() => handleStatusUpdate(parcel, 'delivered')}
               >
                 Deliver
               </button>
@@ -176,10 +283,9 @@ function PendingDeliveries() {
         </div>
       ))}
 
+      {/* No pending parcels */}
       {parcels.length === 0 && (
-        <p className="text-center mt-6 text-gray-500">
-          No pending deliveries
-        </p>
+        <p className="text-center mt-6 text-gray-500">No pending deliveries</p>
       )}
     </div>
   );

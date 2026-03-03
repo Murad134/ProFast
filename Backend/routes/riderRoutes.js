@@ -41,7 +41,7 @@ const verifyAdmin = require("../middleware/verifyAdmin");
 
 
 // ➕ Register a new rider (only logged-in users can apply)
-router.post("/", registerRider);
+router.post("/",verifyFBToken, registerRider);
 
 
 // 🛵 Rider Routes (ONLY riders)
@@ -53,17 +53,19 @@ router.get("/parcels", verifyFBToken, verifyRider, fetchRiderParcels);
 router.get(
     "/completedparcels",
     verifyFBToken,
+    verifyRider,
     fetchCompletedRiderParcels
 );
 
 // 👑 Admin Routes (ONLY admin)
 // Get pending rider applications
-router.get("/pending", fetchPendingRiders);
+router.get("/pending",verifyFBToken, verifyAdmin, fetchPendingRiders);
 
 // Approve / Reject rider
 router.patch(
     "/:id/status",
     verifyFBToken,
+    verifyAdmin,
     changeRiderStatus
 );
 // Get active riders

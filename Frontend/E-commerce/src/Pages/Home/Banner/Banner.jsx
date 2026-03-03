@@ -6,20 +6,33 @@ import img2 from '../../../assets/banner/banner2.png'
 import img3 from '../../../assets/banner/banner3.png'
 function Banner() {
     return (
-        <Carousel autoPlay={true} infiniteLoop={true} showThumbs={false} showStatus={false} interval={3000}>
-            <div>
-                <img src={img1} />
-                <p className="legend">1</p>
-            </div>
-            <div>
-                <img src={img2} />
-                <p className="legend">2</p>
-            </div>
-            <div>
-                <img src={img3} />
-                <p className="legend">3</p>
-            </div>
-        </Carousel>
+        // <Carousel autoPlay={true} infiniteLoop={true} showThumbs={false} showStatus={false} interval={3000}>
+        //     <div>
+        //         <img src={img1} />
+        //         <p className="legend">1</p>
+        //     </div>
+        //     <div>
+        //         <img src={img2} />
+        //         <p className="legend">2</p>
+        //     </div>
+        //     <div>
+        //         <img src={img3} />
+        //         <p className="legend">3</p>
+        //     </div>
+        // </Carousel>
+        <div className="w-full">
+            <Carousel autoPlay infiniteLoop showThumbs={false} showStatus={false} interval={3000} dynamicHeight={false}>
+                <div>
+                    <img src={img1} alt="Banner 1" className="w-full h-full object-cover" />
+                </div>
+                <div>
+                    <img src={img2} alt="Banner 2" className="w-full h-full object-cover" />
+                </div>
+                <div>
+                    <img src={img3} alt="Banner 3" className="w-full h-full object-cover" />
+                </div>
+            </Carousel>
+        </div>
     )
 }
 export default Banner

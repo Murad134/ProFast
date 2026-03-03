@@ -114,61 +114,63 @@ function Login() {
     };
 
     return (
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <div className="card-body">
-                <h1 className="text-5xl font-bold">Please Login</h1>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <fieldset className="fieldset">
-                        <label className="label">Email</label>
-                        <input
-                            type="email"
-                            name='email'
-                            ref={emailRef}
-                            {...register('email')}
-                            className="input" placeholder="Email" />
+        <div className="flex items-center justify-center px-2">
+            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+                <div className="card-body">
+                    <h1 className="text-5xl font-bold">Please Login</h1>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <fieldset className="fieldset">
+                            <label className="label">Email</label>
+                            <input
+                                type="email"
+                                name='email'
+                                ref={emailRef}
+                                {...register('email')}
+                                className="input" placeholder="Email" />
 
-                        <label className="label">Password</label>
-                        <div className='relative'>
-                            <input
-                                type={showpassword ? "text" : "password"}
-                                name='password'
-                                {...register('password', { required: true, minLength: 6 })}
-                                className="input" placeholder="Password" />
-                            <button
-                                type='button'
-                                onClick={() => {
-                                    setshowpassword(!showpassword);
-                                }}
-                                className='btn btn-xs absolute top-2 right-6'>
-                                {
-                                    showpassword ? <FaEyeSlash /> : <FaEye />
-                                }
-                            </button>
-                        </div>
-                        {
-                            errors.password?.type === 'required' && <p className="text-red-500">Password is required</p>
-                        }
-                        {
-                            errors.password?.type === 'minLength' && <p className="text-red-500">Password must be at least 6 characters</p>
-                        }
-                        <div onClick={handleForgotPassword} className='text-right mt-1'>
-                            <a className="link link-hover">Forgot password?</a>
-                        </div>
-                        <label className="label mt-2">
-                            <input
-                                type="checkbox"
-                                name='terms'
-                                {...register('terms')}
-                                className="checkbox" />
-                            Accept Terms and Conditions
-                        </label>
-                        <button className="btn btn-primary mt-4">Login</button>
-                    </fieldset>
-                    <p><small>Don't have an account? <Link className='btn btn-link' to="/register">Register</Link></small></p>
-                </form>
-                <SocialLogin />
+                            <label className="label">Password</label>
+                            <div className='relative'>
+                                <input
+                                    type={showpassword ? "text" : "password"}
+                                    name='password'
+                                    {...register('password', { required: true, minLength: 6 })}
+                                    className="input" placeholder="Password" />
+                                <button
+                                    type='button'
+                                    onClick={() => {
+                                        setshowpassword(!showpassword);
+                                    }}
+                                    className='btn btn-xs absolute top-2 right-6'>
+                                    {
+                                        showpassword ? <FaEyeSlash /> : <FaEye />
+                                    }
+                                </button>
+                            </div>
+                            {
+                                errors.password?.type === 'required' && <p className="text-red-500">Password is required</p>
+                            }
+                            {
+                                errors.password?.type === 'minLength' && <p className="text-red-500">Password must be at least 6 characters</p>
+                            }
+                            <div onClick={handleForgotPassword} className='text-right mt-1'>
+                                <a className="link link-hover">Forgot password?</a>
+                            </div>
+                            <label className="label mt-2">
+                                <input
+                                    type="checkbox"
+                                    name='terms'
+                                    {...register('terms')}
+                                    className="checkbox" />
+                                Accept Terms and Conditions
+                            </label>
+                            <button className="btn btn-primary mt-4">Login</button>
+                        </fieldset>
+                        <p><small>Don't have an account? <Link className='btn btn-link' to="/register">Register</Link></small></p>
+                    </form>
+                    <SocialLogin />
+                </div>
             </div>
-        </div>
+        </div >
     )
 }
 export default Login
