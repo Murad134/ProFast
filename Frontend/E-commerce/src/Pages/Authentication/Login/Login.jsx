@@ -16,7 +16,7 @@ function Login() {
     const { signIn } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const [errorMessage, setErrorMessage] = useState(""); const from = location.state?.from || '/';
+    const [, setErrorMessage] = useState(""); const from = location.state?.from || '/';
 
     const axiosInstance = useAxios();
     const [showpassword, setshowpassword] = useState(false);
@@ -112,6 +112,7 @@ function Login() {
                 });
             });
     };
+
 
     return (
         <div className="flex items-center justify-center px-2">

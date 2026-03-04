@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: `http://localhost:3050`,
+    baseURL: `https://backend-one-mauve-16.vercel.app`,
 });
 
 function useAxios() {

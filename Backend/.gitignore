@@ -4,3 +4,4 @@ dist
 firebase-admin_key.json
 convertKey.js
 encoded_key.txt
+.vercel

@@ -92,7 +92,7 @@ function Register() {
             formData.append("image", image);
 
             const res = await axios.post(
-                "http://localhost:3050/api/upload-image",
+                "https://backend-one-mauve-16.vercel.app/api/upload-image",
                 formData
             );
 

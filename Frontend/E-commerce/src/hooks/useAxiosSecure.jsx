@@ -3,7 +3,7 @@ import axios from 'axios'
 import useAuth from './useAuth';
 import { useNavigate } from 'react-router';
 const axiosSecure = axios.create({
-    baseURL: `http://localhost:3050`,
+    baseURL: `https://backend-one-mauve-16.vercel.app`,
 });
 
 function useAxiosSecure() {
