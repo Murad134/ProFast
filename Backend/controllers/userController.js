@@ -29,13 +29,13 @@ const getUserRole = async (req, res) => {
     const user = await getUserByEmail(email);
 
     if (!user) {
-      return res.status(404).send({ message: "User not found" });
+      return res.status(200).send({ role: "user" });
     }
 
     res.status(200).send({ role: user.role || "user" });
   } catch (error) {
     console.error("Error getting user role:", error);
-    res.status(500).send({ message: "Failed to get role" });
+    res.status(200).send({ role: "user" });
   }
 };
 

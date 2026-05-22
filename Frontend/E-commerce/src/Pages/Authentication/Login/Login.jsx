@@ -34,26 +34,8 @@ function Login() {
                 return;
             }
 
-            // 1️⃣ Check user exists in DB
-            const res = await axiosInstance.get(
-                `/users/check?email=${data.email}`
-            );
-
-            if (!res.data.exists) {
-                Swal.fire({
-                    title: "Not Registered",
-                    text: "Please register first then try.",
-                    icon: "warning"
-                });
-                return;
-            }
-
-            // 2️⃣ Firebase login
+            // 1️⃣ Firebase login
             const result = await signIn(data.email, data.password);
-
-
-
-
 
             //3️⃣ Check email verified
             if (!result.user.emailVerified) {
@@ -63,6 +45,21 @@ function Login() {
                     icon: "warning"
                 });
                 return;
+            }
+
+            // 2️⃣ Keep the backend user record in sync, but do not block login if
+            // the API is temporarily unavailable.
+            try {
+                const userInfo = {
+                    email: result.user.email,
+                    role: "user",
+                    created_at: new Date().toISOString(),
+                    last_log_in: new Date().toISOString(),
+                };
+
+                await axiosInstance.post("/users", userInfo);
+            } catch (syncError) {
+                console.error("User sync failed after login:", syncError);
             }
 
             Swal.fire({

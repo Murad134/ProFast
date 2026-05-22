@@ -1,11 +1,11 @@
 
 import { useQuery } from '@tanstack/react-query';
 import useAuth from './useAuth';
-import useAxiosSecure from './useAxiosSecure';
+import useAxios from './useAxios';
 
 const useUserRole = () => {
     const { user, loading } = useAuth();
-    const axiosSecure = useAxiosSecure();
+    const axiosInstance = useAxios();
     const {
         data = { role: 'user' },
         isLoading,
@@ -14,10 +14,16 @@ const useUserRole = () => {
     } = useQuery({
         queryKey: ['user-role', user?.email],
         enabled: !!user?.email && !loading,
+        retry: false,
         queryFn: async () => {
             // const res = await axiosSecure.get(`/users/${user.email}/role`);
-            const res = await axiosSecure.get(`/users/role?email=${user.email}`);
-            return res.data; // { role: 'admin' }
+            try {
+                const res = await axiosInstance.get(`/users/role?email=${user.email}`);
+                return res.data; // { role: 'admin' }
+            } catch (error) {
+                console.error('Failed to load user role, falling back to user:', error);
+                return { role: 'user' };
+            }
         },
     });
 

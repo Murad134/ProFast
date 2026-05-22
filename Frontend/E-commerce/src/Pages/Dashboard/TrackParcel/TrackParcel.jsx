@@ -21,12 +21,20 @@ function TrackParcel() {
 
   const fetchTracking = async (id) => {
     try {
+      const trimmedId = id.trim();
+
+      if (!trimmedId) {
+        setUpdates([]);
+        setError("Please enter a tracking ID");
+        return;
+      }
+
       setLoading(true);
       setError("");
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/tracking/${id}`
+        `${import.meta.env.VITE_backend_url}/tracking/${trimmedId}`
       );
-      setUpdates(res.data);
+      setUpdates(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       setError("Failed to fetch tracking info: " + err.message);
       setUpdates([]);
@@ -36,8 +44,15 @@ function TrackParcel() {
   };
 
   const handleSearch = () => {
-    if (!trackId.trim()) return;
-    navigate(`/track/${trackId}`); // URL change triggers fetch
+    const trimmedId = trackId.trim();
+
+    if (!trimmedId) {
+      setError("Please enter a tracking ID");
+      setUpdates([]);
+      return;
+    }
+
+    navigate(`/dashboard/track/${trimmedId}`); // URL change triggers fetch
   };
 
   return (
