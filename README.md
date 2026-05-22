@@ -1,507 +1,530 @@
-# 📦 ProFast - Parcel Delivery Management System
+﻿# 📦 ProFast - Parcel Delivery Management System
 
-[![Node.js](https://img.shields.io/badge/Node.js-v18+-green?style=flat-square)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Database-green?style=flat-square)](https://www.mongodb.com/)
-[![React](https://img.shields.io/badge/React-19.2-blue?style=flat-square)](https://react.dev/)
-[![Express.js](https://img.shields.io/badge/Express.js-5.2-gray?style=flat-square)](https://expressjs.com/)
-[![Vite](https://img.shields.io/badge/Vite-7.2-purple?style=flat-square)](https://vitejs.dev/)
-[![License](https://img.shields.io/badge/License-ISC-yellow?style=flat-square)](#license)
-[![Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=flat-square)](https://vercel.com/)
+A scalable and role-based full-stack web application designed to streamline the management of parcel delivery, rider allocation, tracking, and customer administration.
+
+The platform provides a centralized digital ecosystem where users, delivery riders, and administrators can efficiently manage and monitor parcel shipments through a modern, secure, and responsive web interface.
 
 ---
 
-## 📌 Project Overview
+## 🌐 Live Links
 
-**ProFast** is a comprehensive **MERN Stack Parcel Delivery Management System** built to revolutionize parcel booking, rider management, and delivery tracking across all 64 districts of Bangladesh. The platform provides seamless integration with payment gateways, real-time tracking, and role-based access control for Users, Riders, and Administrators.
-
-With robust authentication via Firebase, Stripe payment integration, and district-based rider assignment, ProFast ensures efficient delivery operations with transparency and security at its core.
-
----
-
-## 🌐 Live Demo
-
-- **Frontend:** [https://ecommerce-ad492.web.app/](https://ecommerce-ad492.web.app/)
-- **Backend API:** [https://backend-one-mauve-16.vercel.app/](https://backend-one-mauve-16.vercel.app/)
+- **Frontend**: https://ecommerce-ad492.web.app
+- **Backend API**: https://backend-one-mauve-16.vercel.app
 
 ---
 
-## ✨ Key Features
+# Project Overview
 
-### 👤 User Features
-- ✅ Register & Login with email verification
-- ✅ Role-based dashboard access
-- ✅ Create and manage parcels
-- ✅ Secure payment via Stripe (Visa/Card)
-- ✅ Track parcel delivery in real-time
-- ✅ View parcel history and payment records
-- ✅ Request to become a rider
-- ✅ Profile management
+The **ProFast - Parcel Delivery Management System** was developed to solve the limitations of manual or disjointed parcel booking systems conventionally used in logistics.
 
-### 🛵 Rider Features
-- ✅ Create parcels and manage shipments
-- ✅ Secure payment processing
-- ✅ View assigned and pending parcels
-- ✅ Update delivery status and track progress
-- ✅ View completed deliveries
-- ✅ Monitor earnings and payment history
-- ✅ District-based parcel assignment
+Traditional delivery management systems often suffer from:
 
-### 👨‍💼 Admin Features
-- ✅ Manage all parcels and deliveries
-- ✅ Assign riders based on district availability
-- ✅ Approve/manage rider requests
-- ✅ View active riders and performance metrics
-- ✅ Create additional admin accounts
-- ✅ Monitor all payments and transactions
-- ✅ Comprehensive reporting dashboard
+* Difficult tracking and updates
+* Inefficient rider allocation
+* Lack of centralized administration
+* Poor scalability
+* Weak role-based access control
+* Insecure or slow payment processing
 
-### 🌍 General Features
-- ✅ Firebase authentication with email verification
-- ✅ Role-based access control (RBAC)
-- ✅ District coverage mapping (64 districts of Bangladesh)
-- ✅ Real-time parcel tracking with Leaflet maps
-- ✅ Responsive design for mobile and desktop
-- ✅ Image upload and management via Cloudinary
-- ✅ Protected API routes with token verification
+To overcome these challenges, this system introduces a dynamic and scalable architecture that supports:
+
+* Real-time parcel tracking
+* Role-based administration
+* Secure Stripe payment integration
+* Dynamic rider assignments
+* Profile and earnings management for riders
+* Administrative dashboard for system governance
+* Interactive map-based tracking
+
+The system is designed with modular architecture principles to ensure maintainability, scalability, and future extensibility.
 
 ---
 
-## 🛠️ Tech Stack
+# Key Features
 
-### Frontend Stack
-| Technology | Purpose |
-|--|--|
-| **React.js** v19.2 | UI Library |
-| **Vite** v7.2 | Build Tool & Dev Server |
-| **Tailwind CSS** v4.1 | Styling & Responsive Design |
-| **React Router** v7.11 | Client-side Routing |
-| **Axios** v1.13 | HTTP Client |
-| **React Hook Form** v7.69 | Form Management |
-| **TanStack React Query** v5.90 | Data Fetching & Caching |
-| **Recharts** v3.7 | Charts & Analytics |
-| **Leaflet/React-Leaflet** v5.0 | Maps & Geolocation |
-| **Stripe React** v5.6 | Payment Processing |
-| **Firebase** v12.7 | Authentication & Hosting |
+## Core Functionalities
 
-### Backend Stack
-| Technology | Purpose |
-|--|--|
-| **Node.js** | Runtime Environment |
-| **Express.js** v5.2 | Web Framework |
-| **MongoDB** v7.0 | NoSQL Database |
-| **Mongoose** v9.1 | ODM for MongoDB |
-| **Firebase Admin** v13.6 | Authentication Verification |
-| **Stripe** v20.3 | Payment Gateway |
-| **Cloudinary** v1.41 | Image Upload & Storage |
-| **Multer** v2.0 | File Handling |
-| **CORS** v2.8 | Cross-Origin Requests |
-| **dotenv** v17.2 | Environment Variables |
+* Full Stack MERN-Based Architecture
+* Role-Based Access Control (RBAC)
+* JWT Authentication via Firebase
+* Secure Password Encryption
+* Dynamic CRUD Operations
+* Real-Time Data Synchronization
+* Responsive User Interface
+* Parcel Booking & Management
+* Delivery Rider Allocation System
+* Real-Time Event Tracking & Logging
+* Secure Stripe Integration
+* Administrative Dashboard
+* Scalable Modular Structure
+* Optimized Database Operations
+* Cloudinary Image Upload Support
 
 ---
 
-## 📥 Installation Steps
+# User Roles & Permissions
 
-### Prerequisites
-Ensure you have the following installed:
-- **Node.js** (v16 or higher)
-- **npm** or **yarn** package manager
-- **MongoDB** (local or Atlas cloud instance)
-- **Git** for version control
+The platform provides three different access levels to ensure secure and structured management of logistic resources.
 
-### 1. Clone the Repository
-```bash
+---
+
+## Customer / User
+
+Users are regular customers looking to book parcels, track them, and make payments.
+
+### User Capabilities
+
+* Register and Login securely
+* Create and schedule new parcels
+* View parcel history and current statuses
+* Process secure payments using Stripe
+* Track assigned delivery riders
+* Update profile and request to become a rider
+* Access coverage and service metrics
+
+---
+
+## Delivery Rider
+
+Riders act as the on-ground delivery personnel managing assigned logistical tasks.
+
+### Rider Capabilities
+
+* Access a personalized Rider Dashboard
+* View pending and assigned deliveries
+* Update parcel statuses (Picked Up, Delivered, etc.)
+* View detailed delivery routes
+* Track personal delivery earnings and history
+* Oversee completed deliveries
+* Request cashouts from administrators
+
+---
+
+## Administrator
+
+Admins have complete authority over the entirety of the system's operational flow and workforce governance.
+
+### Admin Capabilities
+
+### Parcel Operations
+
+* Oversee all system parcels
+* Manually assign unallocated parcels to riders based on districts
+* Update systemic parcel statuses
+
+### Workforce Management
+
+* Review and approve new Rider requests
+* View active riders and track their performance
+* Manage platform users and assign roles (Promote to Admin)
+* Track and manage rider payouts
+
+### System Governance
+
+* Centralized performance dashboard
+* Access aggregate delivery and revenue metrics
+* Full System Monitoring & Control
+
+---
+
+# Technology Stack
+
+## Frontend Technologies
+
+| Technology       | Purpose                        |
+| ---------------- | ------------------------------ |
+| React.js (v19)   | Interactive UI Development     |
+| Tailwind CSS     | Responsive Styling             |
+| TanStack Query   | Data Fetching & Caching        |
+| React-Leaflet    | Map & Geolocation Tracking     |
+| Stripe React     | Payment Gateway UI             |
+
+---
+
+## Backend Technologies
+
+| Technology       | Purpose                        |
+| ---------------- | ------------------------------ |
+| Node.js          | Server-Side Runtime            |
+| Express.js       | REST API Development           |
+| MongoDB          | NoSQL Database                 |
+| Firebase Admin   | Authentication Verification    |
+| Stripe Node      | Secure Payment Processing      |
+
+---
+
+## Development Tools
+
+* Visual Studio Code
+* Git & GitHub
+* Vercel (Deployment)
+* Firebase Console
+* MongoDB Atlas
+
+---
+
+# System Architecture
+
+The project follows a modern multi-tier architecture for scalability and maintainability.
+
+## Frontend Layer
+
+Handles user interaction, map rendering, API polling, and responsive UI using React.js and Vite.
+
+## Backend Layer
+
+Provides RESTful APIs, Firebase token verification, role-based authorization, and business logic using Node.js and Express.js.
+
+## Database Layer
+
+Stores structured logistic objects, user profiles, financial logs, and tracking states using MongoDB and Mongoose.
+
+---
+
+# Installation Guide
+
+## Prerequisites
+
+Before running the project locally, make sure you have:
+
+* Node.js 18 or later
+* npm or yarn
+* MongoDB Atlas account or local MongoDB instance
+* Firebase project (for Auth)
+* Stripe account (for payments)
+* Cloudinary account (for imagery)
+
+## Setup Steps
+
+1. Clone the repository.
+
+\\\ash
 git clone https://github.com/Murad134/E_Commerce_Platform.git
-cd Web_Project
-```
+cd E_Commerse_Project
+\\\
 
-### 2. Backend Setup
+2. Install backend dependencies.
 
-#### Navigate to Backend Directory
-```bash
+\\\ash
 cd Backend
-```
-
-#### Install Dependencies
-```bash
 npm install
-```
+\\\
 
-#### Start Backend Server
-```bash
-npm run dev          # Development mode with nodemon
-# or
-npm start            # Production mode
-```
+3. Install frontend dependencies.
 
-Backend will run on: `http://localhost:3050`
-
-### 3. Frontend Setup
-
-#### Navigate to Frontend Directory
-```bash
-cd Frontend/E-commerce
-```
-
-#### Install Dependencies
-```bash
+\\\ash
+cd ../Frontend/E-commerce
 npm install
-```
+\\\
 
-#### Start Frontend Development Server
-```bash
-npm run dev
-```
+4. Create the backend environment file.
 
-Frontend will run on: `http://localhost:5173`
+Create a \.env\ file inside the \Backend\ folder and add the required values.
 
----
+\\\env
+PORT=3050
+DB_URI=YOUR_MONGODB_URI
+STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET
+CLOUDINARY_CLOUD_NAME=YOUR_CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY=YOUR_CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET=YOUR_CLOUDINARY_API_SECRET
+FIREBASE_PROJECT_ID=YOUR_FIREBASE_PROJECT_ID
+FIREBASE_CLIENT_EMAIL=YOUR_FIREBASE_CLIENT_EMAIL
+FIREBASE_PRIVATE_KEY="YOUR_FIREBASE_PRIVATE_KEY"
+\\\
 
-##  Running the Application
+5. Create the frontend environment file.
 
-### Development Environment
+Create a \.env.local\ file inside \Frontend/E-commerce\.
 
-#### Terminal 1 - Backend
-```bash
+\\\env
+VITE_backend_url=http://localhost:3050
+VITE_FIREBASE_API_KEY=YOUR_FIREBASE_API_KEY
+VITE_FIREBASE_AUTH_DOMAIN=YOUR_FIREBASE_AUTH_DOMAIN
+VITE_FIREBASE_PROJECT_ID=YOUR_FIREBASE_PROJECT_ID
+VITE_STRIPE_PUBLIC_KEY=YOUR_STRIPE_PUBLIC_KEY
+\\\
+
+## How to Run
+
+### Development Mode
+
+Start the backend server.
+
+\\\ash
 cd Backend
 npm run dev
-```
+\\\
 
-#### Terminal 2 - Frontend
-```bash
+Start the frontend application.
+
+\\\ash
 cd Frontend/E-commerce
 npm run dev
-```
+\\\
 
-Then open your browser and navigate to: `http://localhost:5173`
+Visit:
+
+\\\	ext
+http://localhost:5173
+\\\
 
 ### Production Build
 
-#### Build Frontend
-```bash
+Build the frontend.
+
+\\\ash
 cd Frontend/E-commerce
 npm run build
-```
-
-#### Deploy Backend
-Deploy to Vercel or your preferred hosting:
-```bash
-# Using Vercel CLI
-vercel deploy
-```
+\\\
 
 ---
 
-## 📡 API Overview
+# Folder Structure
 
-### Base URL
-- **Development:** `http://localhost:3050`
-- **Production:** `https://backend-one-mauve-16.vercel.app`
-
-### Authentication Endpoints
-
-#### `/users` - User Management
-| Method | Endpoint | Description | Auth |
-|--|--|--|--|
-| `POST` | `/users` | Create or update user | ❌ |
-| `GET` | `/users/check` | Check if user exists | ❌ |
-| `GET` | `/users/role` | Get user role | ❌ |
-| `GET` | `/users/search` | Search users | ✅ Admin |
-| `PATCH` | `/users/:id/role` | Change user role | ✅ Admin |
-
-### Parcel Endpoints
-
-#### `/parcels` - Parcel Management
-| Method | Endpoint | Description | Auth |
-|--|--|--|--|
-| `POST` | `/parcels` | Create new parcel | ✅ User |
-| `GET` | `/parcels` | Fetch parcels (with filters) | ✅ User |
-| `GET` | `/parcels/:id` | Get parcel by ID | ✅ User |
-| `PATCH` | `/parcels/:id` | Update parcel | ✅ User |
-| `DELETE` | `/parcels/:id` | Delete parcel | ✅ User |
-| `PATCH` | `/parcels/:id/assign` | Assign rider to parcel | ✅ Admin |
-| `PATCH` | `/parcels/:id/status` | Update delivery status | ✅ Rider |
-| `PATCH` | `/parcels/:id/cashout` | Process cashout | ✅ Rider |
-| `GET` | `/parcels/delivery/status-count` | Get status statistics | ✅ User |
-
-### Rider Endpoints
-
-#### `/rider` - Rider Management
-| Method | Endpoint | Description | Auth |
-|--|--|--|--|
-| `POST` | `/rider` | Create/request rider profile | ✅ User |
-| `GET` | `/rider` | Get all riders | ✅ Admin |
-| `GET` | `/rider/:id` | Get rider by ID | ✅ User |
-| `PATCH` | `/rider/:id` | Update rider profile | ✅ Rider |
-
-### Payment Endpoints
-
-#### `/payments` - Payment Processing
-| Method | Endpoint | Description | Auth |
-|--|--|--|--|
-| `POST` | `/payments` | Create payment intent | ✅ User |
-| `GET` | `/payments` | Get payment history | ✅ User |
-| `GET` | `/payments/:id` | Get payment by ID | ✅ User |
-
-### Tracking Endpoints
-
-#### `/tracking` - Parcel Tracking
-| Method | Endpoint | Description | Auth |
-|--|--|--|--|
-| `POST` | `/tracking` | Log tracking event | ✅ Rider |
-| `GET` | `/tracking/:parcelId` | Get tracking history | ✅ User |
-
-### Upload Endpoints
-
-#### `/api` - File Upload
-| Method | Endpoint | Description | Auth |
-|--|--|--|--|
-| `POST` | `/api/upload` | Upload image to Cloudinary | ✅ User |
-
----
-
-## 📁 Folder Structure
-
-```
-Web_Project/
-│
+\\\	ext
 ├── Backend/
 │   ├── config/
-│   │   ├── db.js                    # MongoDB connection
-│   │   ├── firebase.js              # Firebase configuration
-│   │   ├── cloudinary.js            # Cloudinary setup
-│   │   └── stripe.js                # Stripe configuration
-│   │
+│   │   ├── cloudinary.js
+│   │   ├── db.js
+│   │   ├── firebase.js
+│   │   └── stripe.js
 │   ├── controllers/
-│   │   ├── userController.js        # User logic (register, role)
-│   │   ├── parcelController.js      # Parcel CRUD & management
-│   │   ├── riderController.js       # Rider profile management
-│   │   ├── paymentController.js     # Payment processing
-│   │   ├── trackingController.js    # Delivery tracking
-│   │   └── uploadController.js      # Image upload handling
-│   │
+│   │   ├── parcelController.js
+│   │   ├── paymentController.js
+│   │   ├── riderController.js
+│   │   ├── trackingController.js
+│   │   ├── uploadController.js
+│   │   └── userController.js
 │   ├── middleware/
-│   │   ├── verifyFBToken.js         # Firebase token validation
-│   │   ├── verifyAdmin.js           # Admin role verification
-│   │   └── verifyRider.js           # Rider role verification
-│   │
+│   │   ├── verifyAdmin.js
+│   │   ├── verifyFBToken.js
+│   │   └── verifyRider.js
 │   ├── models/
-│   │   ├── userModel.js             # User schema
-│   │   ├── parcelModel.js           # Parcel schema
-│   │   ├── riderModel.js            # Rider schema
-│   │   ├── paymentModel.js          # Payment schema
-│   │   └── trackingModel.js         # Tracking schema
-│   │
+│   │   ├── parcelModel.js
+│   │   ├── paymentModel.js
+│   │   ├── riderModel.js
+│   │   ├── trackingModel.js
+│   │   └── userModel.js
 │   ├── routes/
-│   │   ├── userRoutes.js            # User endpoints
-│   │   ├── parcelRoutes.js          # Parcel endpoints
-│   │   ├── riderRoutes.js           # Rider endpoints
-│   │   ├── paymentRoutes.js         # Payment endpoints
-│   │   ├── trackingRoutes.js        # Tracking endpoints
-│   │   └── uploadRoutes.js          # Upload endpoints
-│   │
+│   │   ├── parcelRoutes.js
+│   │   ├── paymentRoutes.js
+│   │   ├── riderRoutes.js
+│   │   ├── trackingRoutes.js
+│   │   ├── uploadRoutes.js
+│   │   └── userRoutes.js
 │   ├── utility/
-│   │   └── initModels.js            # Initialize database models
-│   │
-│   ├── app.js                       # Express app setup
-│   ├── server.js                    # Server entry point
+│   │   └── initModels.js
+│   ├── app.js
+│   ├── server.js
 │   ├── package.json
-│   └── .env                         # Environment variables
+│   └── vercel.json
 │
-├── Frontend/E-commerce/
-│   ├── public/
-│   │   └── districtsData.json       # Bangladesh districts data
-│   │
-│   ├── src/
-│   │   ├── assets/
-│   │   │   ├── banner/              # Banner images
-│   │   │   ├── brands/              # Brand logos
-│   │   │   └── Tracker/             # Tracking assets
-│   │   │
-│   │   ├── Components/
-│   │   │   └── Loading.jsx          # Loading component
-│   │   │
-│   │   ├── Contexts/
-│   │   │   └── AuthContext/
-│   │   │       ├── AuthContext.jsx  # Auth context
-│   │   │       └── AuthProvider.jsx # Auth provider
-│   │   │
-│   │   ├── Firebase/
-│   │   │   └── firebase.init.js     # Firebase configuration
-│   │   │
-│   │   ├── hooks/
-│   │   │   ├── useAuth.jsx          # Authentication hook
-│   │   │   ├── useAxios.jsx         # Axios instance hook
-│   │   │   ├── useAxiosSecure.jsx   # Secure Axios hook
-│   │   │   ├── useTrackingLogger.jsx# Tracking hook
-│   │   │   └── useUserRole.jsx      # User role hook
-│   │   │
-│   │   ├── Layouts/
-│   │   │   ├── RootLayout.jsx       # Main layout
-│   │   │   ├── AuthLayout.jsx       # Auth pages layout
-│   │   │   └── DashboardLayout.jsx  # Dashboard layout
-│   │   │
-│   │   ├── Pages/
-│   │   │   ├── Home/                # Home page & sections
-│   │   │   ├── Authentication/      # Login & Register
-│   │   │   ├── SendParcel/          # Parcel booking
-│   │   │   ├── Coverage/            # Coverage & map
-│   │   │   ├── AboutUs/             # About page
-│   │   │   ├── Dashboard/           # Dashboard pages
-│   │   │   │   ├── MyParcels/
-│   │   │   │   ├── TrackParcel/
-│   │   │   │   ├── Payment/
-│   │   │   │   ├── AssignRider/
-│   │   │   │   ├── ActiveRider/
-│   │   │   │   ├── MakeAdmin/
-│   │   │   │   ├── BeARider/
-│   │   │   │   ├── MyEarning/
-│   │   │   │   ├── UpdateProfile/
-│   │   │   │   ├── PendingDeliveries/
-│   │   │   │   ├── CompletedDeliveries/
-│   │   │   │   └── DashboardHome/
-│   │   │   ├── Shared/              # Shared components
-│   │   │   │   ├── Navbar/
-│   │   │   │   ├── Footer/
-│   │   │   │   └── ProFastLogo/
-│   │   │   └── Forbidden/           # 403 page
-│   │   │
-│   │   ├── Router/
-│   │   │   └── router.jsx           # Route configuration
-│   │   │
-│   │   ├── routes/
-│   │   │   ├── PrivateRoute.jsx     # Protected routes
-│   │   │   ├── AdminRoutes.jsx      # Admin-only routes
-│   │   │   └── RiderRoute.jsx       # Rider-only routes
-│   │   │
-│   │   ├── App.jsx                  # Root component
-│   │   ├── main.jsx                 # Entry point
-│   │   ├── App.css
-│   │   └── index.css
-│   │
-│   ├── package.json
-│   ├── vite.config.js
-│   ├── eslint.config.js
-│   ├── index.html
-│   └── .env.local                   # Environment variables
+├── Frontend/
+│   └── E-commerce/
+│       ├── public/
+│       │   └── districtsData.json
+│       ├── src/
+│       │   ├── assets/
+│       │   ├── Components/
+│       │   ├── Contexts/
+│       │   ├── Firebase/
+│       │   ├── hooks/
+│       │   ├── Layouts/
+│       │   ├── Pages/
+│       │   ├── Router/
+│       │   ├── routes/
+│       │   ├── App.css
+│       │   ├── App.jsx
+│       │   ├── index.css
+│       │   └── main.jsx
+│       ├── eslint.config.js
+│       ├── firebase.json
+│       ├── index.html
+│       ├── package.json
+│       ├── README.md
+│       └── vite.config.js
 │
-└── README.md                        # Project documentation
-```
+└── README.md
+\\\
 
 ---
 
-## 📸 Screenshots
+# Security Features
 
-### User Features
-- **Home Page:** Browse and explore parcel delivery services
-- **Send Parcel:** Easy-to-use parcel booking interface with district selection
-- **Parcel Tracking:** Real-time tracking with interactive map integration
-- **Payment:** Secure Stripe payment integration for parcel shipping
-
-### Rider Dashboard
-- **Pending Deliveries:** View and manage assigned parcels
-- **Earnings Dashboard:** Monitor income and payment history
-- **Delivery Map:** District-based parcel assignment
-
-### Admin Panel
-- **Rider Management:** Approve, view, and manage riders
-- **Parcel Assignment:** Assign riders based on district availability
-- **Payment Monitoring:** Track all transactions and payments
-- **Admin Control:** Create additional admins and manage users
+* Authentication via Firebase Identity
+* Role-Based Authorization Guards (Admin/Rider/User)
+* Protected API Routes via verifyFBToken Middleware
+* Dynamic Payload Validation for Requests
+* Secure Gateway Interfacing (Stripe API)
 
 ---
 
-## 🔧 Configuration Details
+# Real-Time Functionalities
 
-### Firebase Setup
-1. Create a Firebase project at [firebase.google.com](https://firebase.google.com)
-2. Enable Authentication (Email/Password & Google Sign-in)
-3. Download service account key for backend
-4. Copy web config for frontend `.env.local`
-
-### Stripe Setup
-1. Sign up at [stripe.com](https://stripe.com)
-2. Get API keys from dashboard
-3. Add to backend and frontend environment files
-
-### Cloudinary Setup
-1. Create account at [cloudinary.com](https://cloudinary.com)
-2. Get API credentials from account settings
-3. Add to backend `.env` file
-
-### MongoDB Setup
-1. Create MongoDB Atlas account at [mongodb.com](https://mongodb.com)
-2. Create cluster and get connection URI
-3. Add to backend `.env` file
+* Dynamic Data Synchronization via TanStack Query
+* Live Parcel Tracking visually synced onto Leaflet Maps
+* Real-Time Dashboard Analytics (Recharts)
+* Automated status transitions based on Rider input
 
 ---
 
-## 🚀 Deployment
+# System Modules
 
-### Frontend Deployment (Firebase Hosting)
-```bash
-cd Frontend/E-commerce
-npm run build
-firebase deploy
-```
-
-### Backend Deployment (Vercel)
-```bash
-cd Backend
-vercel deploy
-```
+The platform is divided into multiple independent and scalable modules to ensure maintainability, flexibility, and efficient governance of logistics.
 
 ---
 
-## 🔮 Future Improvements
+## Authentication Module
 
-- [ ] **SMS Notifications:** Send delivery updates via SMS
-- [ ] **Email Notifications:** Automated email alerts for parcel status
-- [ ] **Advanced Analytics:** Dashboard analytics for admin users
-- [ ] **Rating & Review System:** Allow users to rate rider performance
-- [ ] **Scheduled Pickups:** Allow users to schedule parcel pickups
-- [ ] **Multiple Payment Methods:** Add PayPal, bKash, Nagad integration
-- [ ] **AI-based Rider Assignment:** ML-powered optimal rider assignment
-- [ ] **Mobile App:** React Native mobile application
-- [ ] **Insurance Options:** Add insurance coverage for valuable parcels
-- [ ] **Return Management:** Easy return and refund processing
-- [ ] **API Documentation:** Swagger/OpenAPI documentation
-- [ ] **Unit & Integration Tests:** Comprehensive test coverage
-- [ ] **Performance Optimization:** Caching, CDN integration
-- [ ] **Internationalization:** Multi-language support (i18n)
+Acts as the entry layer for all roles, facilitating account safety.
+
+### Functionalities
+
+* JWT Sign-ins and State persistence
+* External Identity integrations (Google Login)
+* Token validity checking and Role mapping
+* Admin-backed Privilege Escalations
 
 ---
 
-## 📝 License
+## Customer Interactions Module
 
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
+Enables the end user to handle their needs effectively.
 
----
+### Functionalities
 
-## 👨‍💻 Author & Contact
-
-**Murad Hasan**
-- GitHub: [@Murad134](https://github.com/Murad134)
-- Email: [muradcse.25@example.com](mailto:muradcse.25@example.com)
-- Portfolio: [your-portfolio.com](https://your-portfolio.com)
-
-### Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-For major changes, please open an issue first to discuss what you would like to change.
+* Dynamic Parcel Scheduling (District allocation)
+* Weight-based price estimators
+* Access tracked parcels mapping interfaces
+* User Profile image updates
 
 ---
 
-## ⭐ Support
+## Rider Operations Module
 
-If you find this project helpful, please consider giving it a star ⭐ on GitHub!
+Manages the core delivery workflow directly affecting systemic logistics.
 
----
-## 🙏 Acknowledgments
+### Functionalities
 
-- MongoDB community for excellent database solutions
-- Firebase for authentication infrastructure
-- Stripe for secure payment processing
-- React and Node.js communities for amazing tools
-- All contributors and users of this project
+* Proximity-based parcel distribution viewing
+* Delivery status patching logic
+* Geo-spatial validation endpoints
+* Payment ledger access and Cashout initiation
 
 ---
+
+## System Administrator Module
+
+Provides panoramic oversight over the system’s lifecycle.
+
+### Functionalities
+
+* District-specific Rider assignments
+* Complete Parcel oversight
+* Performance logging and Analytics reporting
+* Payout management for delivery personnel
+
+---
+
+## Payment & Gateway Module
+
+Safely arbitrates financial commitments and histories.
+
+### Functionalities
+
+* Intent Generation for checkout procedures
+* Transaction history aggregation (User and Rider variants)
+* Ledger syncing alongside backend
+
+---
+
+# Database Design & Management
+
+The platform uses MongoDB as the primary operational database via Mongoose ODMs for seamless aggregation logic.
+
+## Database Features
+
+* Scalable NoSQL Document Nodes
+* Referential Integrity modeled in Mongoose schemas
+* Efficient Tracking aggregations and Geo mapping capabilities
+* Secure User Data Management
+
+---
+
+# API & Backend Functionalities
+
+The backend architecture is designed using RESTful architecture.
+
+## Backend Features
+
+* Comprehensive REST routes per system resource
+* Express Middleware implementation (Token checking, Upload interceptions)
+* Separation of Concerns (Routes -> Controllers -> Services/Models)
+* Error Handling & Logging capabilities
+
+---
+
+# Responsive Design
+
+The entire platform interface is carefully crafted entirely within TailwindCSS ensuring high adaptability across resolutions.
+
+## Responsive Features
+
+* Grid/Flex Mobile-First Fallbacks
+* Adaptive Dashboard Sidebar and Drawers
+* Scalable charts and Map canvases
+* Unified Mobile and Desktop workflows
+
+---
+
+# Screenshots
+
+*(Please replace with relevant application screenshots)*
+
+## Customer Interface
+### Send Parcel Page
+<img src="placeholder.png" alt="Send Parcel" />
+
+### Tracking Map
+<img src="placeholder.png" alt="Parcel Tracking" />
+
+---
+
+## Rider Dashboard
+### Assigned Deliveries
+<img src="placeholder.png" alt="Assigned Deliveries" />
+
+### Expected Earnings
+<img src="placeholder.png" alt="Earning Overview" />
+
+---
+
+## Admin Panel
+### Parcel & Fleet Management
+<img src="placeholder.png" alt="System Admin Analytics" />
+
+---
+
+# Future Enhancements
+
+The platform is designed to effortlessly facilitate upgrades in logistics technology.
+
+## Planned Improvements
+
+* OTP & SMS Integration (Twilio/Vonage)
+* Route-Optimization AI for automatic Rider paths
+* International Multi-language support (i18n)
+* PWA / Native Mobile Application iteration
+* In-app dispute and rating systems
+
+---
+
+# Conclusion
+
+The ProFast Parcel Delivery Management System successfully delivers a centralized, scalable, and secure solution for managing logistics networks and shipment handling.
+
+By integrating modern cloud infrastructure, secure real-time workflows, and a refined interface accessible to varied roles, ProFast empowers all aspects of parcel transportation.
+
+---
+
