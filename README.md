@@ -126,21 +126,6 @@ cd Backend
 npm install
 ```
 
-#### Configure Environment Variables
-Create a `.env` file in the `Backend` directory:
-```env
-PORT=3050
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database_name
-FIREBASE_PROJECT_ID=your_firebase_project_id
-FIREBASE_PRIVATE_KEY=your_firebase_private_key
-FIREBASE_CLIENT_EMAIL=your_firebase_client_email
-STRIPE_SECRET_KEY=your_stripe_secret_key
-CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-NODE_ENV=development
-```
-
 #### Start Backend Server
 ```bash
 npm run dev          # Development mode with nodemon
@@ -511,7 +496,6 @@ For major changes, please open an issue first to discuss what you would like to 
 If you find this project helpful, please consider giving it a star ⭐ on GitHub!
 
 ---
-
 ## 🙏 Acknowledgments
 
 - MongoDB community for excellent database solutions
@@ -521,6 +505,3 @@ If you find this project helpful, please consider giving it a star ⭐ on GitHub
 - All contributors and users of this project
 
 ---
-
-**Last Updated:** May 2026
-
