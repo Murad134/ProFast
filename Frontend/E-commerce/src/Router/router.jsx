@@ -25,6 +25,7 @@ import MyEarning from '../Pages/Dashboard/MyEarning/MyEarning.jsx'
 import RiderRoute from '../routes/RiderRoute.jsx'
 import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome.jsx";
 import AboutUs from "../Pages/AboutUs/AboutUs.jsx";
+import UpdateProfile from "../Pages/Dashboard/UpdateProfile/UpdateProfile.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
             {
                 path: 'track',
                 element: <TrackParcel></TrackParcel>
+            },
+            {
+                path: 'profile',
+                element:<UpdateProfile></UpdateProfile>
             },
             // Rider only
             {

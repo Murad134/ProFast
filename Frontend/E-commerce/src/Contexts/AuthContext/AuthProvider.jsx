@@ -24,19 +24,6 @@ function AuthProvider({ children }) {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     // const updateUserProfile = (profileInfo) => {
     //     return updateProfile(auth.currentUser, profileInfo);
     // }
