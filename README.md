@@ -198,30 +198,30 @@ Before running the project locally, make sure you have:
 
 1. Clone the repository.
 
-\\\ash
+```bash
 git clone https://github.com/Murad134/E_Commerce_Platform.git
 cd E_Commerse_Project
-\\\
+```
 
 2. Install backend dependencies.
 
-\\\ash
+```bash
 cd Backend
 npm install
-\\\
+```
 
 3. Install frontend dependencies.
 
-\\\ash
+```bash
 cd ../Frontend/E-commerce
 npm install
-\\\
+```
 
 4. Create the backend environment file.
 
-Create a \.env\ file inside the \Backend\ folder and add the required values.
+Create a `.env` file inside the `Backend` folder and add the required values.
 
-\\\env
+```env
 PORT=3050
 DB_URI=YOUR_MONGODB_URI
 STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET
@@ -231,19 +231,19 @@ CLOUDINARY_API_SECRET=YOUR_CLOUDINARY_API_SECRET
 FIREBASE_PROJECT_ID=YOUR_FIREBASE_PROJECT_ID
 FIREBASE_CLIENT_EMAIL=YOUR_FIREBASE_CLIENT_EMAIL
 FIREBASE_PRIVATE_KEY="YOUR_FIREBASE_PRIVATE_KEY"
-\\\
+```
 
 5. Create the frontend environment file.
 
-Create a \.env.local\ file inside \Frontend/E-commerce\.
+Create a `.env.local` file inside `Frontend/E-commerce`.
 
-\\\env
+```env
 VITE_backend_url=http://localhost:3050
 VITE_FIREBASE_API_KEY=YOUR_FIREBASE_API_KEY
 VITE_FIREBASE_AUTH_DOMAIN=YOUR_FIREBASE_AUTH_DOMAIN
 VITE_FIREBASE_PROJECT_ID=YOUR_FIREBASE_PROJECT_ID
 VITE_STRIPE_PUBLIC_KEY=YOUR_STRIPE_PUBLIC_KEY
-\\\
+```
 
 ## How to Run
 
@@ -251,38 +251,38 @@ VITE_STRIPE_PUBLIC_KEY=YOUR_STRIPE_PUBLIC_KEY
 
 Start the backend server.
 
-\\\ash
+```bash
 cd Backend
 npm run dev
-\\\
+```
 
 Start the frontend application.
 
-\\\ash
+```bash
 cd Frontend/E-commerce
 npm run dev
-\\\
+```
 
 Visit:
 
-\\\	ext
+```text
 http://localhost:5173
-\\\
+```
 
 ### Production Build
 
 Build the frontend.
 
-\\\ash
+```bash
 cd Frontend/E-commerce
 npm run build
-\\\
+```
 
 ---
 
 # Folder Structure
 
-\\\	ext
+```text
 ├── Backend/
 │   ├── config/
 │   │   ├── cloudinary.js
@@ -346,7 +346,7 @@ npm run build
 │       └── vite.config.js
 │
 └── README.md
-\\\
+```
 
 ---
 
