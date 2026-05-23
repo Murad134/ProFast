@@ -487,7 +487,7 @@ The entire platform interface is carefully crafted entirely within TailwindCSS e
 <img src="https://i.ibb.co.com/kg1MS36M/Screenshot-2026-05-23-221827.png" alt="Register Page" />
 
 # Login page
-<img src="placeholder.png" alt="Send Parcel" />
+<img src="https://i.ibb.co.com/JR6B7NLB/Screenshot-2026-05-23-221839.png" alt="Login page" />
 
 
 ## Customer Interface
