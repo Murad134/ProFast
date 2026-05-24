@@ -6,10 +6,9 @@ The platform provides a centralized digital ecosystem where users, delivery ride
 
 ---
 
-## 🌐 Live Links
+## 🌐 Live Link
 
-- **Frontend**: https://ecommerce-ad492.web.app
-- **Backend API**: https://backend-one-mauve-16.vercel.app
+🚀 **[Experience ProFast Live Here!](https://ecommerce-ad492.web.app)**
 
 ---
 
