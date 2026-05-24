@@ -19,22 +19,22 @@ The **ProFast - Parcel Delivery Management System** was developed to solve the l
 
 Traditional delivery management systems often suffer from:
 
-* Difficult tracking and updates
-* Inefficient rider allocation
-* Lack of centralized administration
-* Poor scalability
-* Weak role-based access control
-* Insecure or slow payment processing
+- Difficult tracking and updates
+- Inefficient rider allocation
+- Lack of centralized administration
+- Poor scalability
+- Weak role-based access control
+- Insecure or slow payment processing
 
 To overcome these challenges, this system introduces a dynamic and scalable architecture that supports:
 
-* Real-time parcel tracking
-* Role-based administration
-* Secure Stripe payment integration
-* Dynamic rider assignments
-* Profile and earnings management for riders
-* Administrative dashboard for system governance
-* Interactive map-based tracking
+- Real-time parcel tracking
+- Role-based administration
+- Secure Stripe payment integration
+- Dynamic rider assignments
+- Profile and earnings management for riders
+- Administrative dashboard for system governance
+- Interactive map-based tracking
 
 The system is designed with modular architecture principles to ensure maintainability, scalability, and future extensibility.
 
@@ -44,21 +44,21 @@ The system is designed with modular architecture principles to ensure maintainab
 
 ## Core Functionalities
 
-* Full Stack MERN-Based Architecture
-* Role-Based Access Control (RBAC)
-* JWT Authentication via Firebase
-* Secure Password Encryption
-* Dynamic CRUD Operations
-* Real-Time Data Synchronization
-* Responsive User Interface
-* Parcel Booking & Management
-* Delivery Rider Allocation System
-* Real-Time Event Tracking & Logging
-* Secure Stripe Integration
-* Administrative Dashboard
-* Scalable Modular Structure
-* Optimized Database Operations
-* Cloudinary Image Upload Support
+- Full Stack MERN-Based Architecture
+- Role-Based Access Control (RBAC)
+- JWT Authentication via Firebase
+- Secure Password Encryption
+- Dynamic CRUD Operations
+- Real-Time Data Synchronization
+- Responsive User Interface
+- Parcel Booking & Management
+- Delivery Rider Allocation System
+- Real-Time Event Tracking & Logging
+- Secure Stripe Integration
+- Administrative Dashboard
+- Scalable Modular Structure
+- Optimized Database Operations
+- Cloudinary Image Upload Support
 
 ---
 
@@ -74,13 +74,13 @@ Users are regular customers looking to book parcels, track them, and make paymen
 
 ### User Capabilities
 
-* Register and Login securely
-* Create and schedule new parcels
-* View parcel history and current statuses
-* Process secure payments using Stripe
-* Track assigned delivery riders
-* Update profile and request to become a rider
-* Access coverage and service metrics
+- Register and Login securely
+- Create and schedule new parcels
+- View parcel history and current statuses
+- Process secure payments using Stripe
+- Track assigned delivery riders
+- Update profile and request to become a rider
+- Access coverage and service metrics
 
 ---
 
@@ -90,13 +90,13 @@ Riders act as the on-ground delivery personnel managing assigned logistical task
 
 ### Rider Capabilities
 
-* Access a personalized Rider Dashboard
-* View pending and assigned deliveries
-* Update parcel statuses (Picked Up, Delivered, etc.)
-* View detailed delivery routes
-* Track personal delivery earnings and history
-* Oversee completed deliveries
-* Request cashouts from administrators
+- Access a personalized Rider Dashboard
+- View pending and assigned deliveries
+- Update parcel statuses (Picked Up, Delivered, etc.)
+- View detailed delivery routes
+- Track personal delivery earnings and history
+- Oversee completed deliveries
+- Request cashouts from administrators
 
 ---
 
@@ -108,22 +108,22 @@ Admins have complete authority over the entirety of the system's operational flo
 
 ### Parcel Operations
 
-* Oversee all system parcels
-* Manually assign unallocated parcels to riders based on districts
-* Update systemic parcel statuses
+- Oversee all system parcels
+- Manually assign unallocated parcels to riders based on districts
+- Update systemic parcel statuses
 
 ### Workforce Management
 
-* Review and approve new Rider requests
-* View active riders and track their performance
-* Manage platform users and assign roles (Promote to Admin)
-* Track and manage rider payouts
+- Review and approve new Rider requests
+- View active riders and track their performance
+- Manage platform users and assign roles (Promote to Admin)
+- Track and manage rider payouts
 
 ### System Governance
 
-* Centralized performance dashboard
-* Access aggregate delivery and revenue metrics
-* Full System Monitoring & Control
+- Centralized performance dashboard
+- Access aggregate delivery and revenue metrics
+- Full System Monitoring & Control
 
 ---
 
@@ -131,35 +131,35 @@ Admins have complete authority over the entirety of the system's operational flo
 
 ## Frontend Technologies
 
-| Technology       | Purpose                        |
-| ---------------- | ------------------------------ |
-| React.js (v19)   | Interactive UI Development     |
-| Tailwind CSS     | Responsive Styling             |
-| TanStack Query   | Data Fetching & Caching        |
-| React-Leaflet    | Map & Geolocation Tracking     |
-| Stripe React     | Payment Gateway UI             |
+| Technology     | Purpose                    |
+| -------------- | -------------------------- |
+| React.js (v19) | Interactive UI Development |
+| Tailwind CSS   | Responsive Styling         |
+| TanStack Query | Data Fetching & Caching    |
+| React-Leaflet  | Map & Geolocation Tracking |
+| Stripe React   | Payment Gateway UI         |
 
 ---
 
 ## Backend Technologies
 
-| Technology       | Purpose                        |
-| ---------------- | ------------------------------ |
-| Node.js          | Server-Side Runtime            |
-| Express.js       | REST API Development           |
-| MongoDB          | NoSQL Database                 |
-| Firebase Admin   | Authentication Verification    |
-| Stripe Node      | Secure Payment Processing      |
+| Technology     | Purpose                     |
+| -------------- | --------------------------- |
+| Node.js        | Server-Side Runtime         |
+| Express.js     | REST API Development        |
+| MongoDB        | NoSQL Database              |
+| Firebase Admin | Authentication Verification |
+| Stripe Node    | Secure Payment Processing   |
 
 ---
 
 ## Development Tools
 
-* Visual Studio Code
-* Git & GitHub
-* Vercel (Deployment)
-* Firebase Console
-* MongoDB Atlas
+- Visual Studio Code
+- Git & GitHub
+- Vercel (Deployment)
+- Firebase Console
+- MongoDB Atlas
 
 ---
 
@@ -187,12 +187,12 @@ Stores structured logistic objects, user profiles, financial logs, and tracking 
 
 Before running the project locally, make sure you have:
 
-* Node.js 18 or later
-* npm or yarn
-* MongoDB Atlas account or local MongoDB instance
-* Firebase project (for Auth)
-* Stripe account (for payments)
-* Cloudinary account (for imagery)
+- Node.js 18 or later
+- npm or yarn
+- MongoDB Atlas account or local MongoDB instance
+- Firebase project (for Auth)
+- Stripe account (for payments)
+- Cloudinary account (for imagery)
 
 ## Setup Steps
 
@@ -352,20 +352,20 @@ npm run build
 
 # Security Features
 
-* Authentication via Firebase Identity
-* Role-Based Authorization Guards (Admin/Rider/User)
-* Protected API Routes via verifyFBToken Middleware
-* Dynamic Payload Validation for Requests
-* Secure Gateway Interfacing (Stripe API)
+- Authentication via Firebase Identity
+- Role-Based Authorization Guards (Admin/Rider/User)
+- Protected API Routes via verifyFBToken Middleware
+- Dynamic Payload Validation for Requests
+- Secure Gateway Interfacing (Stripe API)
 
 ---
 
 # Real-Time Functionalities
 
-* Dynamic Data Synchronization via TanStack Query
-* Live Parcel Tracking visually synced onto Leaflet Maps
-* Real-Time Dashboard Analytics (Recharts)
-* Automated status transitions based on Rider input
+- Dynamic Data Synchronization via TanStack Query
+- Live Parcel Tracking visually synced onto Leaflet Maps
+- Real-Time Dashboard Analytics (Recharts)
+- Automated status transitions based on Rider input
 
 ---
 
@@ -381,10 +381,10 @@ Acts as the entry layer for all roles, facilitating account safety.
 
 ### Functionalities
 
-* JWT Sign-ins and State persistence
-* External Identity integrations (Google Login)
-* Token validity checking and Role mapping
-* Admin-backed Privilege Escalations
+- JWT Sign-ins and State persistence
+- External Identity integrations (Google Login)
+- Token validity checking and Role mapping
+- Admin-backed Privilege Escalations
 
 ---
 
@@ -394,10 +394,10 @@ Enables the end user to handle their needs effectively.
 
 ### Functionalities
 
-* Dynamic Parcel Scheduling (District allocation)
-* Weight-based price estimators
-* Access tracked parcels mapping interfaces
-* User Profile image updates
+- Dynamic Parcel Scheduling (District allocation)
+- Weight-based price estimators
+- Access tracked parcels mapping interfaces
+- User Profile image updates
 
 ---
 
@@ -407,10 +407,10 @@ Manages the core delivery workflow directly affecting systemic logistics.
 
 ### Functionalities
 
-* Proximity-based parcel distribution viewing
-* Delivery status patching logic
-* Geo-spatial validation endpoints
-* Payment ledger access and Cashout initiation
+- Proximity-based parcel distribution viewing
+- Delivery status patching logic
+- Geo-spatial validation endpoints
+- Payment ledger access and Cashout initiation
 
 ---
 
@@ -420,10 +420,10 @@ Provides panoramic oversight over the system’s lifecycle.
 
 ### Functionalities
 
-* District-specific Rider assignments
-* Complete Parcel oversight
-* Performance logging and Analytics reporting
-* Payout management for delivery personnel
+- District-specific Rider assignments
+- Complete Parcel oversight
+- Performance logging and Analytics reporting
+- Payout management for delivery personnel
 
 ---
 
@@ -433,9 +433,9 @@ Safely arbitrates financial commitments and histories.
 
 ### Functionalities
 
-* Intent Generation for checkout procedures
-* Transaction history aggregation (User and Rider variants)
-* Ledger syncing alongside backend
+- Intent Generation for checkout procedures
+- Transaction history aggregation (User and Rider variants)
+- Ledger syncing alongside backend
 
 ---
 
@@ -445,10 +445,10 @@ The platform uses MongoDB as the primary operational database via Mongoose ODMs 
 
 ## Database Features
 
-* Scalable NoSQL Document Nodes
-* Referential Integrity modeled in Mongoose schemas
-* Efficient Tracking aggregations and Geo mapping capabilities
-* Secure User Data Management
+- Scalable NoSQL Document Nodes
+- Referential Integrity modeled in Mongoose schemas
+- Efficient Tracking aggregations and Geo mapping capabilities
+- Secure User Data Management
 
 ---
 
@@ -458,10 +458,10 @@ The backend architecture is designed using RESTful architecture.
 
 ## Backend Features
 
-* Comprehensive REST routes per system resource
-* Express Middleware implementation (Token checking, Upload interceptions)
-* Separation of Concerns (Routes -> Controllers -> Services/Models)
-* Error Handling & Logging capabilities
+- Comprehensive REST routes per system resource
+- Express Middleware implementation (Token checking, Upload interceptions)
+- Separation of Concerns (Routes -> Controllers -> Services/Models)
+- Error Handling & Logging capabilities
 
 ---
 
@@ -471,48 +471,94 @@ The entire platform interface is carefully crafted entirely within TailwindCSS e
 
 ## Responsive Features
 
-* Grid/Flex Mobile-First Fallbacks
-* Adaptive Dashboard Sidebar and Drawers
-* Scalable charts and Map canvases
-* Unified Mobile and Desktop workflows
+- Grid/Flex Mobile-First Fallbacks
+- Adaptive Dashboard Sidebar and Drawers
+- Scalable charts and Map canvases
+- Unified Mobile and Desktop workflows
 
 ---
 
 # Screenshots
 
-*(Please replace with relevant application screenshots)*
+Here is a visual overview of the ProFast application interfaces, showcasing its various modules and features.
 
-# Authentication  page
-# Register page 
+## 🔐 Authentication
+
+### Register Page
 <img src="https://i.ibb.co.com/kg1MS36M/Screenshot-2026-05-23-221827.png" alt="Register Page" />
+*A secure registration page for new users to create an account.*
 
-# Login page
+### Login Page
 <img src="https://i.ibb.co.com/JR6B7NLB/Screenshot-2026-05-23-221839.png" alt="Login page" />
+*A simple and intuitive login interface for returning users, riders, and admins.*
 
+## 🏠 Main Pages
 
-## Customer Interface
+### Home Page - Welcome Section
+<img src="https://i.ibb.co.com/JjfbW4Qb/Home.png" alt="Welcome Section" />
+*The landing page welcoming users with clear calls to action and system highlights.*
+
+### Home Page - Service Section
+<img src="https://i.ibb.co.com/qFYph644/Home-service.png" alt="Service Section" />
+*An overview of the core services and delivery features offered by ProFast.*
+
+### Home Page - Benefits Section
+<img src="https://i.ibb.co.com/NgyYRNyw/Benifit.png" alt="Benifits Section" />
+*Detailing the key benefits for users choosing our parcel delivery management system.*
+
 ### Send Parcel Page
-<img src="placeholder.png" alt="Send Parcel" />
+<img src="https://i.ibb.co.com/ZpYDPCFm/Percel-Delivery-Form.png" alt="Send Parcels page" />
+*A dynamic form allowing users to easily book and schedule new parcel deliveries.*
 
-### Tracking Map
-<img src="placeholder.png" alt="Parcel Tracking" />
+### Available Coverage Area
+<img src="https://i.ibb.co.com/BH1v30d8/All-District-service.png" alt="Available page" />
+*A visual map and list representation of districts where ProFast services are currently active.*
 
----
+### About Us Page
+<img src="https://i.ibb.co.com/3ybX2xZt/About.png" alt="About page" />
+*Information about the ProFast mission, vision, and the team behind the platform.*
 
-## Rider Dashboard
-### Assigned Deliveries
-<img src="placeholder.png" alt="Assigned Deliveries" />
+## 🧑‍💻 User Dashboard
 
-### Expected Earnings
-<img src="placeholder.png" alt="Earning Overview" />
+### My Parcels
+<img src="https://i.ibb.co.com/gZGjmZHr/My-Percels.png" alt="My Percels page" />
+*Users can track their parcel statuses, review delivery history, and take payment actions.*
 
----
+### Payment History
+<img src="https://i.ibb.co.com/FLMsMKqG/Payments-History.png" alt="Payment History page" />
+*A comprehensive ledger showing all previous transactions made by the user.*
 
-## Admin Panel
-### Parcel & Fleet Management
-<img src="placeholder.png" alt="System Admin Analytics" />
+## 🛵 Rider Dashboard
 
----
+### Pending Deliveries
+<img src="https://i.ibb.co.com/twqrQJFp/Rider-Pending-Delivery.png" alt="Pending Deliveries page" />
+*Riders can view and manage their newly assigned parcels and update initial statuses.*
+
+### Completed Deliveries
+<img src="https://i.ibb.co.com/gLRhJ7vB/Rider-Completed-delivery.png" alt="Completed Deliveries page" />
+*A log of successfully delivered parcels mapped to the rider's profile.*
+
+### Rider Earnings
+<img src="https://i.ibb.co.com/NnmgDKNL/Rider-Earning.png" alt="Rider Earning page" />
+*Riders can track their aggregated delivery earnings and initiate cashout requests.*
+
+## 👑 Admin Dashboard
+
+### Pending Riders
+<img src="https://i.ibb.co.com/2Yj5fypz/Pencding-Rider.png" alt="Pending Riders page" />
+*Administrators can review and approve or reject new rider application requests.*
+
+### Active Riders
+<img src="https://i.ibb.co.com/wNcd5Yx7/Active-Rider.png" alt="Active Riders page" />
+*An overview list of all currently active riders and their operational metrics.*
+
+### Assign Riders
+<img src="https://i.ibb.co.com/0pMJj94G/Assign-Rider.png" alt="Assign Riders page" />
+*Manually allocate specific unassigned parcels to suitable active delivery riders.*
+
+### Make Admin
+<img src="https://i.ibb.co.com/JwqTKykP/Make-Admin.png" alt="Make Admin page" />
+*Elevate regular users or riders to administrative roles within the system.*
 
 # Future Enhancements
 
@@ -520,11 +566,11 @@ The platform is designed to effortlessly facilitate upgrades in logistics techno
 
 ## Planned Improvements
 
-* OTP & SMS Integration (Twilio/Vonage)
-* Route-Optimization AI for automatic Rider paths
-* International Multi-language support (i18n)
-* PWA / Native Mobile Application iteration
-* In-app dispute and rating systems
+- OTP & SMS Integration (Twilio/Vonage)
+- Route-Optimization AI for automatic Rider paths
+- International Multi-language support (i18n)
+- PWA / Native Mobile Application iteration
+- In-app dispute and rating systems
 
 ---
 
@@ -535,4 +581,3 @@ The ProFast Parcel Delivery Management System successfully delivers a centralize
 By integrating modern cloud infrastructure, secure real-time workflows, and a refined interface accessible to varied roles, ProFast empowers all aspects of parcel transportation.
 
 ---
-
